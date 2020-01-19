@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Chika</string>
+    <string name="check_connect">Please check your connection</string>
+    <string name="name_Room">Room name: </string>
+    <string name="type_room_name">Type your room"'s name</string>
+    <string name="done">Done</string>
+    <string name="title_home">Home</string>
+    <string name="title_room">Room</string>
+    <string name="title_script">Script</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_auto">Automatic</string>
+    <string name="title_account">Account</string>
+    <string name="status_normal">Normal</string>
+    <string name="status_hot">Hot</string>
+    <string name="status_wet">Wet</string>
+    <string name="status_dry">Dry</string>
+    <string name="status_dark">Dark</string>
+    <string name="temp_home">*C</string>
+    <string name="temperature">Temperature</string>
+
+    <string name="put_email">Input your email:</string>
+    <string name="check_email_again">Please check your Email again!</string>
+    <string name="invalid">Invalid</string>
+    <string name="not_invalid">Not Invalid</string>
+    <string name="send">Send</string>
+    <string name="ok">It\'s ok, now check your Email</string>
+    <string name="setting_ip">Set IP</string>
+    <string name="sign_out">Sign out</string>
+    <string name="account">Account</string>
+    <string name="english">English</string>
+    <string name="remember">Remember me</string>
+    <string name="your_host">Your host</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_language">Change language</string>
+
+    <!--Login-->
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_forget_pass">Forget Password</string>
+    <string name="login_login">LOGIN</string>
+
+    <!--Title-->
+    <string name="choose_floor">Choose Floor</string>
+    <string name="floor_1">Floor 1</string>
+    <string name="floor_2">Floor 2</string>
+    <string name="garden">Garden</string>
+    <string name="garage">Garage</string>
+    <string name="security">Security</string>
+    <string name="script">Script</string>
+
+    <!--Room-->
+    <string name="floor1">Floor 1</string>
+    <string name="floor2">Floor 2</string>
+    <string name="living_room">Living Room</string>
+    <string name="bed_room">Bed room</string>
+    <string name="kitchen">Kitchen</string>
+    <string name="bath_room">Bath room</string>
+    <string name="working_room">Working room</string>
+
+    <!--Device-->
+    <string name="cooker">Cooker</string>
+    <string name="boiler">Boiler</string>
+    <string name="light">Light</string>
+    <string name="air_conditioner">Conditioner</string>
+    <string name="television">Television</string>
+    <string name="window">Window</string>
+    <string name="camera">Camera</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

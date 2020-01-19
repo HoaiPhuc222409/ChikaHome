@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_out">Đăng xuất</string>
+    <string name="account">Tài khoản</string>
+    <string name="english">Tiếng Anh</string>
+    <string name="remember">Ghi nhớ đăng nhập</string>
+    <string name="your_host">Địa chỉ của bạn</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="change_password">Thay đổi mật khẩu</string>
+    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="setting_ip">Cài đặt IP</string>
+    <string name="app_name">Chika</string>
+    <string name="working_room">Phòng làm việc</string>
+    <string name="window">Cửa sổ</string>
+    <string name="television">Tivi</string>
+    <string name="security">Bảo mật</string>
+    <string name="script">Kịch bản</string>
+    <string name="login_username">Tên người dùng</string>
+    <string name="login_password">Mật khẩu</string>
+    <string name="login_login">ĐĂNG NHẬP</string>
+    <string name="login_forget_pass">Quên mật khẩu</string>
+    <string name="living_room">Phòng khách</string>
+    <string name="light">Đèn</string>
+    <string name="kitchen">Nhà bếp</string>
+    <string name="garden">Vườn</string>
+    <string name="garage">Nhà xe</string>
+    <string name="floor2">Lầu 2</string>
+    <string name="floor1">Lầu 1</string>
+    <string name="floor_2">Lầu 2</string>
+    <string name="floor_1">Lầu 1</string>
+    <string name="cooker">Nấu cơm</string>
+    <string name="choose_floor">Chọn lầu</string>
+    <string name="camera">Giám sát</string>
+    <string name="boiler">Đun nước</string>
+    <string name="bed_room">Phòng ngủ</string>
+    <string name="bath_room">Nhà tắm</string>
+    <string name="air_conditioner">Điều hòa</string>
+</resources>

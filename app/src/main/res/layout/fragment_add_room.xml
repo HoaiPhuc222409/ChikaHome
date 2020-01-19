@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    tools:context=".fragment.AddRoomFragment">
+
+    <TextView
+        android:id="@+id/tvDone"
+        android:text="@string/done"
+        android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:fontFamily="@font/comic"
+        android:gravity="end"
+        android:layout_marginBottom="70dp"
+        android:paddingEnd="30dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageView
+        android:id="@+id/img_icon_room"
+        android:layout_width="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_add_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_icon_room"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginTop="-30dp"
+        android:layout_toEndOf="@id/img_icon_room"
+        android:src="@drawable/ic_camera_icon_room" />
+
+    <LinearLayout
+        android:id="@+id/ln1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_icon_room"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_stroke"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/comic"
+            android:text="@string/name_Room"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edt_room_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/comic"
+            android:hint="@string/type_room_name"
+            android:textColor="@android:color/white"
+            android:textColorHint="#B89494"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ln1"
+        android:layout_marginTop="-23dp">
+
+        <GridView
+            android:id="@+id/gridImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:numColumns="3"
+            android:padding="20dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</RelativeLayout>
