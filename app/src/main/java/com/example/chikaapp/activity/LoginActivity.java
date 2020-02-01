@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imgHidePass.setOnClickListener(this);
         imgSetting.setOnClickListener(this);
         mqttService=MQTTService.getInstance(getApplicationContext(), this);
+
     }
 
     public void changeLanguage(String language) {
@@ -258,6 +259,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onReceive(String mess) {
         if(mess.equals("1")){
             btnTest1.setText("ON");
-        }else btnTest2.setText("OFF");
+        }else btnTest1.setText("OFF");
     }
 }

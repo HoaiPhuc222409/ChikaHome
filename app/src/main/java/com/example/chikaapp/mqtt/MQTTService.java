@@ -51,7 +51,7 @@ public class MQTTService implements MqttCallback {
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    subscribe("light",1);
+                    subscribe("0c38a97d-1564-4707-935c-18b4e9bcb0db",1);
                 }
 
                 @Override
@@ -116,7 +116,7 @@ public class MQTTService implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Toast.makeText(context, "topic: " + topic + "\tMess: " + message.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "topic: " + topic + "\tMess: " + message.toString(), Toast.LENGTH_SHORT).show();
         stringTopic=topic;
         stringMessage=message.toString();
         listener.onReceive(message.toString());
