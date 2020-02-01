@@ -17,7 +17,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MQTTService implements MqttCallback {
 
-    final static String URL = "tcp://14.186.18.140:2502";
+    final static String URL = "tcp://chika.gq:2502";
 
     public static String stringTopic="";
 
@@ -116,7 +116,7 @@ public class MQTTService implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-//        Toast.makeText(context, "topic: " + topic + "\tMess: " + message.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "topic: " + topic + "\tMess: " + message.toString(), Toast.LENGTH_SHORT).show();
         stringTopic=topic;
         stringMessage=message.toString();
         listener.onReceive(message.toString());

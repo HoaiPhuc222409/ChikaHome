@@ -12,8 +12,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,14 +32,6 @@ import com.example.chikaapp.mqtt.MQTTService;
 import com.example.chikaapp.request.LoginRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.eclipse.paho.android.service.MqttAndroidClient;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
 import java.util.Locale;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
@@ -47,26 +42,26 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MQTTService.listener{
 
     APILogin apiLogin;
 
 
-    ActivityLoginBinding binding;
+    ImageView imgSetting, imgShowPass, imgHidePass;
+    Button btnLogin, btnTest1, btnTest2;
+    TextView tvForgetPassword;
+
+    EditText edtUsername, edtPassword;
+
     ACProgressPie dialog;
-    Button light1, light2;
     MQTTService mqttService;
-
-
-    private final String SharedReferencesFile = "sharedReferencesFile";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        setContentView(R.layout.activity_login);
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        initialize();
 
         dialog = new ACProgressPie.Builder(this)
                 .ringColor(Color.WHITE)
@@ -75,43 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         dialog.setCancelable(true);
 
-        binding.imgSetting.setOnClickListener(v -> showPopupMenu());
-
-        binding.btnLogin.setOnClickListener(v -> {
-
-            String user = binding.edtUserLogin.getText().toString();
-            String password = binding.edtPassword.getText().toString();
-
-            getToken(user, password);
-
-        });
-
-        binding.btnTest1.setOnClickListener(v -> {
-            if (binding.btnTest1.getText().toString().equals("ON")) {
-                mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "0");
-                binding.btnTest1.setText("OFF");
-            } else {
-                mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "1");
-                binding.btnTest1.setText("ON");
-            }
-        });
-
-        binding.btnTest1.setOnClickListener(v -> {
-            if (binding.btnTest2.getText().toString().equals("ON")) {
-                mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "0");
-                binding.btnTest1.setText("OFF");
-            } else {
-                mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "1");
-                binding.btnTest2.setText("ON");
-            }
-        });
-
-        binding.tvForgetPassword.setOnClickListener(v -> {
-            Intent intent1 = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
-            startActivity(intent1);
-        });
-
-        binding.edtPassword.addTextChangedListener(new TextWatcher() {
+        edtPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -119,27 +78,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (binding.edtPassword.getText().toString().length() == 0) {
-                    binding.imgShowPass.setVisibility(View.INVISIBLE);
-                    binding.imgHidePass.setVisibility(View.INVISIBLE);
+                if (edtPassword.getText().toString().length() == 0) {
+                    imgShowPass.setVisibility(View.INVISIBLE);
+                    imgHidePass.setVisibility(View.INVISIBLE);
 
                 } else {
-                    binding.imgShowPass.setVisibility(View.VISIBLE);
-                    binding.imgShowPass.setOnClickListener(v -> {
-                        binding.imgShowPass.setVisibility(View.INVISIBLE);
-                        binding.imgHidePass.setVisibility(View.VISIBLE);
-
-                        binding.edtPassword.setTransformationMethod(null);
-                        binding.edtPassword.setSelection(binding.edtPassword.getText().length());
-
-                    });
-                    binding.imgHidePass.setOnClickListener(v -> {
-                        binding.imgHidePass.setVisibility(View.INVISIBLE);
-                        binding.imgShowPass.setVisibility(View.VISIBLE);
-
-                        binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
-                        binding.edtPassword.setSelection(binding.edtPassword.getText().length());
-                    });
+                    imgShowPass.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -155,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Hiện menu setting
     private void showPopupMenu() {
-        PopupMenu popupMenu = new PopupMenu(LoginActivity.this, binding.imgSetting);
+        PopupMenu popupMenu = new PopupMenu(LoginActivity.this, imgSetting);
         popupMenu.getMenuInflater().inflate(R.menu.setting_menu, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(item -> {
@@ -168,15 +112,31 @@ public class LoginActivity extends AppCompatActivity {
                     changeLanguage("vi");
                     break;
                 }
-                case R.id.menuSetIPAddress: {
-                    binding.tvInputHost.setVisibility(View.VISIBLE);
-                    binding.edtHost.setVisibility(View.VISIBLE);
-                    binding.edtHost.requestFocus();
-                }
             }
             return false;
         });
         popupMenu.show();
+    }
+
+    public void initialize(){
+        imgSetting=findViewById(R.id.imgSetting);
+        btnLogin=findViewById(R.id.btnLogin);
+        btnTest1=findViewById(R.id.btnTest1);
+        btnTest2=findViewById(R.id.btnTest2);
+        imgHidePass=findViewById(R.id.imgHidePass);
+        imgShowPass=findViewById(R.id.imgShowPass);
+        edtUsername=findViewById(R.id.edtUserLogin);
+        edtPassword=findViewById(R.id.edtPassword);
+        tvForgetPassword=findViewById(R.id.tvForgetPassword);
+
+        btnLogin.setOnClickListener(this);
+        btnTest1.setOnClickListener(this);
+        btnTest2.setOnClickListener(this);
+        tvForgetPassword.setOnClickListener(this);
+        imgShowPass.setOnClickListener(this);
+        imgHidePass.setOnClickListener(this);
+        imgSetting.setOnClickListener(this);
+        mqttService=MQTTService.getInstance(getApplicationContext(), this);
     }
 
     public void changeLanguage(String language) {
@@ -217,8 +177,87 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 dialog.dismiss();
+                Log.i("error3",t.toString());
                 Toast.makeText(LoginActivity.this, R.string.check_connect, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnLogin:{
+                String user = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+
+                if (user.isEmpty()){
+                    edtUsername.setError("Not available");
+                } else if (password.isEmpty()){
+                    edtPassword.setError("Not available");
+                } else {
+                    getToken(user, password);
+                }
+                break;
+            }
+            case R.id.imgHidePass:{
+                imgHidePass.setVisibility(View.INVISIBLE);
+                imgShowPass.setVisibility(View.VISIBLE);
+
+                edtPassword.setTransformationMethod(new PasswordTransformationMethod());
+                edtPassword.setSelection(edtPassword.getText().length());
+
+                break;
+            }
+            case R.id.imgShowPass:{
+                imgShowPass.setVisibility(View.INVISIBLE);
+                imgHidePass.setVisibility(View.VISIBLE);
+
+                edtPassword.setTransformationMethod(null);
+                edtPassword.setSelection(edtPassword.getText().length());
+
+                break;
+            }
+            case R.id.tvForgetPassword:{
+                Intent intent1 = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                startActivity(intent1);
+
+                break;
+            }
+            case R.id.imgSetting:{
+                showPopupMenu();
+                break;
+            }
+            case R.id.btnTest1:{
+                if (btnTest1.getText().toString().equals("ON")) {
+                    mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "0");
+                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    btnTest1.setText("OFF");
+                } else {
+                    mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "1");
+                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    btnTest1.setText("ON");
+                }
+                break;
+            }
+            case R.id.btnTest2:{
+                if (btnTest2.getText().toString().equals("ON")) {
+                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "0");
+                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    btnTest2.setText("OFF");
+                } else {
+                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "1");
+                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    btnTest2.setText("ON");
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onReceive(String mess) {
+        if(mess.equals("1")){
+            btnTest1.setText("ON");
+        }else btnTest2.setText("OFF");
     }
 }
