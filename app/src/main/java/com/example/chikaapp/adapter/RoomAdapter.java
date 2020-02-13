@@ -42,8 +42,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Room room = roomArrayList.get(position);
-        Image image=new Image();
-        image.setId(room.getLogo());
 
         switch (room.getLogo()){
             case 1:{
@@ -55,12 +53,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 break;
             }
             case 3:{
-                logoId=R.id.useLogo;
+                logoId=R.drawable.avatar;
+                break;
             }
         }
 
         holder.logo.setImageResource(logoId);
         holder.room_name.setText(room.getName_Room());
+        holder.room_id.setText(room.getId());
+        holder.room_user_Id.setText(room.getUserId());
     }
 
     @Override
@@ -71,11 +72,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView logo;
         TextView room_name;
+        TextView room_id;
+        TextView room_user_Id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             logo = itemView.findViewById(R.id.img_room);
             room_name = itemView.findViewById(R.id.tv_room_name);
+            room_id=itemView.findViewById(R.id.tv_room_id);
+            room_user_Id=itemView.findViewById(R.id.tv_room_user_id);
         }
 
     }

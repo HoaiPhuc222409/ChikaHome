@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imgShowPass.setOnClickListener(this);
         imgHidePass.setOnClickListener(this);
         imgSetting.setOnClickListener(this);
-        mqttService=MQTTService.getInstance(getApplicationContext(), this);
+//        mqttService=MQTTService.getInstance(getApplicationContext(), this);
 
     }
 
@@ -256,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onReceive(String mess) {
+    public void onReceive1(String mess) {
         if(mess.equals("1")){
             btnTest1.setText("ON");
         }else btnTest1.setText("OFF");

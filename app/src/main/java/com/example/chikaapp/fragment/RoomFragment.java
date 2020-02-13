@@ -38,9 +38,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RoomFragment extends Fragment implements View.OnClickListener {
 
-    private Button btnAdd;
-    private RecyclerView rclRoomList;
-    private RoomAdapter roomAdapter;
+    Button btnAdd,btnGetData;
+    RecyclerView rclRoomList;
+    RoomAdapter roomAdapter;
 
     RoomUtils roomUtils;
 
@@ -53,37 +53,8 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_room, container, false);
+
         initialize(view);
-
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiRetrofit.URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        roomUtils = retrofit.create(RoomUtils.class);
-        Call<ArrayList<Room>> call = roomUtils.getRoom(SharedPreferencesUtils.loadToken(getContext()));
-        call.enqueue(new Callback<ArrayList<Room>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Room>> call, Response<ArrayList<Room>> response) {
-                ArrayList<Room> rooms=new ArrayList<>();
-                rooms = response.body();
-                if (rooms != null) {
-
-                    Toast.makeText(getContext(), "Get Success", Toast.LENGTH_SHORT).show();
-                    roomAdapter.updateList(rooms);
-                    roomAdapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(getContext(), "Get Fail", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Room>> call, Throwable t) {
-
-            }
-
-        });
 
         return view;
     }
@@ -91,12 +62,14 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
     public void initialize(View view) {
         rclRoomList = view.findViewById(R.id.rclRoom);
         btnAdd = view.findViewById(R.id.btn_add_room);
+        btnGetData=view.findViewById(R.id.btnGetData);
 
         roomAdapter=new RoomAdapter(new ArrayList<Room>(),getContext());
         rclRoomList.setAdapter(roomAdapter);
         rclRoomList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btnAdd.setOnClickListener(this);
+        btnGetData.setOnClickListener(this);
     }
 
     @Override
@@ -104,6 +77,10 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btn_add_room:
                 showAddRoomFragment();
+                break;
+            case R.id.btnGetData:
+                getDataRoom(SharedPreferencesUtils.loadToken(getContext()));
+                break;
         }
     }
 
@@ -114,6 +91,33 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         transaction.replace(R.id.frame_container, fragment).addToBackStack("addRoomFragment");
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.commit();
+    }
+
+    public void getDataRoom(String token) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiRetrofit.URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        roomUtils = retrofit.create(RoomUtils.class);
+
+        Call<ArrayList<Room>> call = roomUtils.getRoom(token);
+        call.enqueue(new Callback<ArrayList<Room>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Room>> call, Response<ArrayList<Room>> response) {
+                ArrayList<Room> rooms=new ArrayList<>();
+                rooms = response.body();
+                if (rooms!=null){
+                    roomAdapter.updateList(rooms);
+                    roomAdapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Get Success", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Room>> call, Throwable t) {
+            }
+        });
     }
 
 }

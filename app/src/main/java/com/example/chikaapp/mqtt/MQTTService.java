@@ -116,17 +116,16 @@ public class MQTTService implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-//        Toast.makeText(context, "topic: " + topic + "\tMess: " + message.toString(), Toast.LENGTH_SHORT).show();
         stringTopic=topic;
         stringMessage=message.toString();
-        listener.onReceive(message.toString());
+        listener.onReceive1(stringMessage);
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
     }
     public interface listener{
-        void onReceive(String mess);
+        void onReceive1(String mess);
     }
 
 }
