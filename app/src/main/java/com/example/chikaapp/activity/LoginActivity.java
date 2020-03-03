@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imgSetting=findViewById(R.id.imgSetting);
         btnLogin=findViewById(R.id.btnLogin);
         btnTest1=findViewById(R.id.btnTest1);
-        btnTest2=findViewById(R.id.btnTest2);
+//        btnTest2=findViewById(R.id.btnTest2);
         imgHidePass=findViewById(R.id.imgHidePass);
         imgShowPass=findViewById(R.id.imgShowPass);
         edtUsername=findViewById(R.id.edtUserLogin);
@@ -131,12 +131,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin.setOnClickListener(this);
         btnTest1.setOnClickListener(this);
-        btnTest2.setOnClickListener(this);
+//        btnTest2.setOnClickListener(this);
         tvForgetPassword.setOnClickListener(this);
         imgShowPass.setOnClickListener(this);
         imgHidePass.setOnClickListener(this);
         imgSetting.setOnClickListener(this);
-//        mqttService=MQTTService.getInstance(getApplicationContext(), this);
+        mqttService=MQTTService.getInstance(getApplicationContext(), this);
 
     }
 
@@ -230,28 +230,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.btnTest1:{
                 if (btnTest1.getText().toString().equals("ON")) {
-                    mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "0");
+                    mqttService.publish("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41", "0");
                     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
                     btnTest1.setText("OFF");
                 } else {
-                    mqttService.publish("0c38a97d-1564-4707-935c-18b4e9bcb0db", "1");
+                    mqttService.publish("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41", "1");
                     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
                     btnTest1.setText("ON");
                 }
                 break;
             }
-            case R.id.btnTest2:{
-                if (btnTest2.getText().toString().equals("ON")) {
-                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "0");
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
-                    btnTest2.setText("OFF");
-                } else {
-                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "1");
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
-                    btnTest2.setText("ON");
-                }
-                break;
-            }
+//            case R.id.btnTest2:{
+//                if (btnTest2.getText().toString().equals("ON")) {
+//                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "0");
+//                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+//                    btnTest2.setText("OFF");
+//                } else {
+//                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "1");
+//                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+//                    btnTest2.setText("ON");
+//                }
+//                break;
+//            }
         }
     }
 

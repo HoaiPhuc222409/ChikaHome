@@ -51,7 +51,7 @@ public class MQTTService implements MqttCallback {
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    subscribe("0c38a97d-1564-4707-935c-18b4e9bcb0db",1);
+                    subscribe("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41",1);
                 }
 
                 @Override

@@ -20,12 +20,11 @@ import com.example.chikaapp.adapter.RoomAdapter;
 import com.example.chikaapp.api.ApiRetrofit;
 import com.example.chikaapp.api.RoomUtils;
 import com.example.chikaapp.model.Room;
-import com.example.chikaapp.request.CreateRoomRequest;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
