@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chikaapp.R;
 import com.example.chikaapp.SharedPreferencesUtils;
-import com.example.chikaapp.adapter.RoomAdapter;
 import com.example.chikaapp.api.ApiRetrofit;
 import com.example.chikaapp.api.RoomUtils;
 import com.example.chikaapp.model.Room;
@@ -39,7 +38,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
 
     Button btnAdd,btnGetData;
     RecyclerView rclRoomList;
-    RoomAdapter roomAdapter;
 
     RoomUtils roomUtils;
 
@@ -63,8 +61,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         btnAdd = view.findViewById(R.id.btn_add_room);
         btnGetData=view.findViewById(R.id.btnGetData);
 
-        roomAdapter=new RoomAdapter(new ArrayList<Room>(),getContext());
-        rclRoomList.setAdapter(roomAdapter);
         rclRoomList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         btnAdd.setOnClickListener(this);
@@ -107,8 +103,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                 ArrayList<Room> rooms=new ArrayList<>();
                 rooms = response.body();
                 if (rooms!=null){
-                    roomAdapter.updateList(rooms);
-                    roomAdapter.notifyDataSetChanged();
                     Toast.makeText(getContext(), "Get Success", Toast.LENGTH_SHORT).show();
                 }
             }

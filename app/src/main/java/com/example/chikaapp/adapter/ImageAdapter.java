@@ -52,7 +52,6 @@ public class ImageAdapter extends BaseAdapter {
 
         Image image = this.imageList.get(position);
 
-
         holder.img_Room.setImageResource(image.getUrl_image());
 
         return convertView;

@@ -20,14 +20,8 @@ import com.example.chikaapp.fragment.HomeFragment;
 import com.example.chikaapp.fragment.RoomFragment;
 import com.example.chikaapp.fragment.ScriptFragment;
 import com.example.chikaapp.fragment.UserFragment;
-import com.example.chikaapp.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 

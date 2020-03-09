@@ -1,12 +1,13 @@
 package com.example.chikaapp.model;
 
 public class Room {
+    private String id;
     private int logo;
     private int userId;
     private String name_Room;
-    private String id;
 
-    public Room(int logo, String name_Room, int userId, String id) {
+
+    public Room(String id,int logo, String name_Room, int userId) {
         this.logo = logo;
         this.name_Room = name_Room;
         this.userId = userId;

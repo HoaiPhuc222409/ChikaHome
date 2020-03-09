@@ -2,15 +2,15 @@ package com.example.chikaapp.request;
 
 public class LoginRequest {
 
-    private String usernameOrEmail;
+    private String phoneOrEmail;
 
     private String password;
 
     public LoginRequest() {
     }
 
-    public LoginRequest(String usernameOrEmail, String password) {
-        this.usernameOrEmail = usernameOrEmail;
+    public LoginRequest(String phoneOrEmail, String password) {
+        this.phoneOrEmail = phoneOrEmail;
         this.password = password;
     }
 }
