@@ -32,6 +32,10 @@ import com.example.chikaapp.mqtt.MQTTService;
 import com.example.chikaapp.request.LoginRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
+
 import java.util.Locale;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
@@ -122,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imgSetting=findViewById(R.id.imgSetting);
         btnLogin=findViewById(R.id.btnLogin);
         btnTest1=findViewById(R.id.btnTest1);
-//        btnTest2=findViewById(R.id.btnTest2);
+        btnTest2=findViewById(R.id.btn_Test22);
         imgHidePass=findViewById(R.id.imgHidePass);
         imgShowPass=findViewById(R.id.imgShowPass);
         edtUsername=findViewById(R.id.edtUserLogin);
@@ -131,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin.setOnClickListener(this);
         btnTest1.setOnClickListener(this);
-//        btnTest2.setOnClickListener(this);
+        btnTest2.setOnClickListener(this);
         tvForgetPassword.setOnClickListener(this);
         imgShowPass.setOnClickListener(this);
         imgHidePass.setOnClickListener(this);
@@ -230,35 +234,39 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.btnTest1:{
                 if (btnTest1.getText().toString().equals("ON")) {
-                    mqttService.publish("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41", "0");
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710", "0");
                     btnTest1.setText("OFF");
                 } else {
-                    mqttService.publish("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41", "1");
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710", "1");
                     btnTest1.setText("ON");
                 }
                 break;
             }
-//            case R.id.btnTest2:{
-//                if (btnTest2.getText().toString().equals("ON")) {
-//                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "0");
-//                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
-//                    btnTest2.setText("OFF");
-//                } else {
-//                    mqttService.publish("7f704fdf-fa4b-44e2-b359-5ef19294196a", "1");
-//                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
-//                    btnTest2.setText("ON");
-//                }
-//                break;
-//            }
+            case R.id.btn_Test22:{
+                if (btnTest2.getText().toString().equals("ON")) {
+                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d", "0");
+                    btnTest2.setText("OFF");
+                } else {
+                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d","1");
+                    btnTest2.setText("ON");
+                }
+                break;
+            }
         }
     }
 
     @Override
-    public void onReceive1(String mess) {
-        if(mess.equals("1")){
-            btnTest1.setText("ON");
-        }else btnTest1.setText("OFF");
+    public void onReceive1(String topic, String mess) {
+        if(topic.equals("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710")){
+            if(mess.equals("1")){
+                btnTest1.setText("ON");
+            }else btnTest1.setText("OFF");
+        }
+        else if(topic.equals("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d")){
+            if(mess.equals("1")){
+                btnTest2.setText("ON");
+            }else btnTest2.setText("OFF");
+        }
+
     }
 }

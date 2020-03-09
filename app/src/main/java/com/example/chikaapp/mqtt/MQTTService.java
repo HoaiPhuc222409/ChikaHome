@@ -51,7 +51,8 @@ public class MQTTService implements MqttCallback {
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    subscribe("2a0a6b88-769e-4a63-ac5d-1392a7199e88/be47fa93-15df-44b6-bdba-c821a117cd41",1);
+                    subscribe("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710",2);
+                    subscribe("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d",2);
                 }
 
                 @Override
@@ -68,6 +69,7 @@ public class MQTTService implements MqttCallback {
 
     public void publish(String topic, String message) {
         MqttMessage mqttMessage = new MqttMessage(message.getBytes());
+        mqttMessage.setRetained(true);
         try {
             client.publish(topic, mqttMessage);
         } catch (MqttException e) {
@@ -118,14 +120,14 @@ public class MQTTService implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         stringTopic=topic;
         stringMessage=message.toString();
-        listener.onReceive1(stringMessage);
+        listener.onReceive1(stringTopic, stringMessage);
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
     }
     public interface listener{
-        void onReceive1(String mess);
+        void onReceive1(String topic, String mess);
     }
 
 }

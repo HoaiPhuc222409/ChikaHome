@@ -171,7 +171,8 @@
                     android:textColor="@android:color/white"
                     android:background="@drawable/bg_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/btnTest1"
@@ -188,20 +189,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/btnTest2"-->
-<!--                    android:text="OFF"-->
-<!--                    android:clickable="true"-->
-<!--                    android:fontFamily="@font/comic"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:layout_marginStart="60dp"-->
-<!--                    android:layout_marginEnd="60dp"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    android:background="@drawable/bg_button"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
+                <Button
+                    android:id="@+id/btn_Test22"
+                    android:text="ON"
+                    android:clickable="true"
+                    android:fontFamily="@font/comic"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginEnd="60dp"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/bg_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </ScrollView>
