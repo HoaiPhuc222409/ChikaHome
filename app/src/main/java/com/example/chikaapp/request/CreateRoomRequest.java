@@ -1,10 +1,10 @@
 package com.example.chikaapp.request;
 
 public class CreateRoomRequest {
-    private int logo;
+    private String logo;
     private String name;
 
-    public CreateRoomRequest(int logo, String name) {
+    public CreateRoomRequest(String logo, String name) {
         this.logo = logo;
         this.name = name;
     }
@@ -12,11 +12,11 @@ public class CreateRoomRequest {
     public CreateRoomRequest() {
     }
 
-    public int getLogo() {
+    public String getLogo() {
         return logo;
     }
 
-    public void setLogo(int logo) {
+    public void setLogo(String logo) {
         this.logo = logo;
     }
 

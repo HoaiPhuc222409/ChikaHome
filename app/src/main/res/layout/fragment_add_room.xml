@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_main"
+    android:background="@drawable/bg_new"
     tools:context=".fragment.AddRoomFragment">
 
     <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:fontFamily="@font/comic"
-            android:text="@string/name_Room"
+            android:text="@string/name"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 

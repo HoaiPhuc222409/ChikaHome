@@ -85,7 +85,7 @@ public class AddRoomFragment extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 roomUtils = retrofit.create(RoomUtils.class);
-                Call<Room> call = roomUtils.createRoom(SharedPreferencesUtils.loadToken(getContext()),new CreateRoomRequest(logo.getId(),room_name));
+                Call<Room> call = roomUtils.createRoom(SharedPreferencesUtils.loadToken(getContext()),new CreateRoomRequest(logo.getName_image(),room_name));
                 call.enqueue(new Callback<Room>() {
                     @Override
                     public void onResponse(Call<Room> call, Response<Room> response) {
@@ -134,8 +134,8 @@ public class AddRoomFragment extends Fragment {
                 Object o = gridView.getItemAtPosition(position);
                 Image image = (Image) o;
                 logo=image;
-                img_Room.setImageResource(image.getUrl_image());
-                room_url_image=image.getUrl_image();
+                img_Room.setImageResource(image.getId());
+                room_url_image=image.getId();
             }
         });
 
@@ -187,10 +187,10 @@ public class AddRoomFragment extends Fragment {
     private List<Image> getListData() {
         List<Image> list = new ArrayList<>();
 
-        list.add(new Image(0, R.drawable.bg_button, "livingRoom"));
-        list.add(new Image(1, R.drawable.ic_camera, "bedRoom"));
-        list.add(new Image(2, R.drawable.bg_item, "garden"));
-        list.add(new Image(3, R.drawable.bg_main, "kitchen"));
+        list.add(new Image("livingRoom", R.drawable.bg_button));
+        list.add(new Image("bedRoom", R.drawable.ic_camera));
+        list.add(new Image("garden", R.drawable.bg_item));
+        list.add(new Image("kitchen", R.drawable.bg_new));
 
         return list;
     }

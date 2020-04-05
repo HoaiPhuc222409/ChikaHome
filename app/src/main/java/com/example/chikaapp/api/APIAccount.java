@@ -12,6 +12,6 @@ public interface APIAccount {
     @Headers({
             "Content-Type:application/json"
     })
-    @GET("user")
+    @GET("user/info")
     Call<User> getUser (@Header("Authorization") String token);
 }

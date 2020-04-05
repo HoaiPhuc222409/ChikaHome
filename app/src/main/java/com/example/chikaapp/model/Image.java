@@ -1,25 +1,18 @@
 package com.example.chikaapp.model;
 
 public class Image {
-    public int url_image;
+
     public String name_image;
     public int id;
 
     public Image() {
     }
 
-    public Image(int id, int img_Room, String roomName) {
-        this.url_image = img_Room;
-        this.name_image = roomName;
+    public Image(String name_image, int id) {
+        this.name_image = name_image;
+
         this.id=id;
-    }
 
-    public int getUrl_image() {
-        return url_image;
-    }
-
-    public void setUrl_image(int url_image) {
-        this.url_image = url_image;
     }
 
     public String getName_image() {

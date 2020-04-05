@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="name">Tên phòng </string>
+    <string name="type_room_name">Điền tên phòng: </string>
+    <string name="done">Xong!!</string>
+    <string name="title_home">Home</string>
+    <string name="title_room">Room</string>
+    <string name="title_script">Script</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_auto">Tự động</string>
+    <string name="title_account">Tài khoản</string>
+    <string name="status_normal">Bình thường</string>
+    <string name="status_hot">Nóng</string>
+    <string name="status_wet">Ướt</string>
+    <string name="status_dry">Khô</string>
+    <string name="status_dark">Tối</string>
+    <string name="temp_home">Độ C</string>
+    <string name="temperature">Nhiệt độ</string>
+
+    <string name="put_email">Nhập email của bạn</string>
+    <string name="check_email_again">Kiểm tra lại email của bạn</string>
+    <string name="invalid">Hợp lệ</string>
+    <string name="not_invalid">Không hợp lệ</string>
+    <string name="send">Gửi</string>
+    <string name="ok">Xong, kiểm tra lại email bạn nhé!</string>
+    <string name="check_connect">Kiểm tra lại kết nối của bạn! </string>
     <string name="sign_out">Đăng xuất</string>
     <string name="account">Tài khoản</string>
     <string name="english">Tiếng Anh</string>
@@ -35,4 +59,6 @@
     <string name="bed_room">Phòng ngủ</string>
     <string name="bath_room">Nhà tắm</string>
     <string name="air_conditioner">Điều hòa</string>
+    <string name="create_date">Ngày tạo: </string>
+    <string name="delete_room">Xóa phòng</string>
 </resources>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Chika</string>
     <string name="check_connect">Please check your connection</string>
-    <string name="name_Room">Room name: </string>
+    <string name="name">Room name: </string>
     <string name="type_room_name">Type your room"'s name</string>
     <string name="done">Done</string>
     <string name="title_home">Home</string>
@@ -25,7 +25,7 @@
     <string name="send">Send</string>
     <string name="ok">It\'s ok, now check your Email</string>
     <string name="setting_ip">Set IP</string>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_out" translatable="false">Sign out</string>
     <string name="account">Account</string>
     <string name="english">English</string>
     <string name="remember">Remember me</string>
@@ -57,6 +57,8 @@
     <string name="kitchen">Kitchen</string>
     <string name="bath_room">Bath room</string>
     <string name="working_room">Working room</string>
+    <string name="create_date">Create date: </string>
+    <string name="delete_room">Delete</string>
 
     <!--Device-->
     <string name="cooker">Cooker</string>
@@ -66,7 +68,4 @@
     <string name="television">Television</string>
     <string name="window">Window</string>
     <string name="camera">Camera</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
