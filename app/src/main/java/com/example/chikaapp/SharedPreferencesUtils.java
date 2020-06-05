@@ -43,6 +43,7 @@ public class SharedPreferencesUtils {
     public static void saveSelf(Context context, User user) {
         SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("id", user.getId());
         editor.putString("createAt", user.getCreateAt());
         editor.putString("avatar", user.getAvatar());
         editor.putString("name", user.getName());
@@ -56,6 +57,7 @@ public class SharedPreferencesUtils {
 
     public static User loadSelf(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
+        long id = preferences.getLong("id", 0);
         String createAt = preferences.getString("crateAt", null);
         String avatar = preferences.getString("avatar", null);
         String name = preferences.getString("name", null);
@@ -64,7 +66,7 @@ public class SharedPreferencesUtils {
         String email = preferences.getString("email", null);
         String phone = preferences.getString("phone", null);
         String role = preferences.getString("role", null);
-        return new User(createAt, avatar, name, birthday, address, email, phone, role);
+        return new User(id, createAt, avatar, name, birthday, address, email, phone, role);
     }
 
     public static void clearSelf(Context context) {

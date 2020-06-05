@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_stroke"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvDone"
+        android:text="@string/done"
+        android:layout_gravity="end"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="45dp"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_logo_here"
+            android:src="@drawable/logo_here_icon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:id="@+id/ln_Device_Name"
+        android:background="@drawable/bg_stroke"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:padding="10dp"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/edt_device_name"
+            android:padding="10dp"
+            android:hint="@string/exp_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/frame_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+
+        <GridView
+            android:id="@+id/gridImageDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:numColumns="3"
+            android:padding="20dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

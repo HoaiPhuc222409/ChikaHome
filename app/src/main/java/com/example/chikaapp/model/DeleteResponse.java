@@ -1,10 +1,10 @@
 package com.example.chikaapp.model;
 
-public class DeleteRespones {
+public class DeleteResponse {
     private boolean success;
     private String message;
 
-    public DeleteRespones(boolean success, String message) {
+    public DeleteResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }

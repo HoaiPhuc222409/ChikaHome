@@ -1,16 +1,21 @@
 package com.example.chikaapp.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.chikaapp.R;
 import com.example.chikaapp.model.Room;
 
@@ -21,6 +26,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     ArrayList<Room> roomArrayList;
     Context context;
     public int roomId;
+    public int roomImg;
+    public int radius;
 
     public RoomAdapter(ArrayList<Room> roomArrayList, Context context) {
         this.roomArrayList = roomArrayList;
@@ -44,11 +51,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Room room = roomArrayList.get(position);
+        radius = 3;
+        roomId= getRoomIcon(room.getLogo());
+        roomImg=getBackgroundImage(room.getLogo());
 
-        roomId=getRoomImage(room.getLogo());
         holder.img_room.setImageResource(roomId);
         holder.tv_room_name.setText(room.getName());
-        holder.tv_date_create.setText(room.getCreateAt());
+
     }
 
     @Override
@@ -56,37 +65,83 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         return roomArrayList.size();
     }
 
-    public int getRoomImage(String roomName) {
-        switch (roomName) {
-            case "livingRoom": {
-                roomId = R.drawable.bg_button;
+    public int getRoomIcon(String roomImageName) {
+        switch (roomImageName) {
+            case "living-room": {
+                roomId = R.drawable.icon_living_room;
                 break;
             }
-            case "bedRoom": {
-                roomId = R.drawable.ic_camera;
+            case "working-room": {
+                roomId = R.drawable.icon_working_room;
+                break;
+            }
+            case "bedroom": {
+                roomId = R.drawable.icon_bed_room;
                 break;
             }
             case "garden": {
-                roomId = R.drawable.bg_item;
+                roomId = R.drawable.icon_garden;
                 break;
             }
             case "kitchen": {
-                roomId = R.drawable.bg_new;
+                roomId = R.drawable.kitchen_icon;
+                break;
+            }
+            case "garage": {
+                roomId = R.drawable.icon_garage;
+                break;
+            }
+            case "bathroom": {
+                roomId = R.drawable.icon_bath_room;
                 break;
             }
         }
         return roomId;
     }
 
+    public int getBackgroundImage(String roomImageName) {
+        switch (roomImageName) {
+            case "living-room": {
+                roomImg = R.drawable.living_room;
+                break;
+            }
+            case "working-room": {
+                roomImg = R.drawable.working_room;
+                break;
+            }
+            case "bedroom": {
+                roomImg = R.drawable.bedroom;
+                break;
+            }
+            case "garden": {
+                roomImg = R.drawable.garden;
+                break;
+            }
+            case "kitchen": {
+                roomImg = R.drawable.kitchen;
+                break;
+            }
+            case "garage": {
+                roomImg = R.drawable.garage;
+                break;
+            }
+            case "bathroom": {
+                roomImg = R.drawable.bathroom;
+                break;
+            }
+        }
+        return roomImg;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_room;
-        TextView tv_room_name, tv_date_create;
+        TextView tv_room_name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img_room = itemView.findViewById(R.id.img_room);
             tv_room_name = itemView.findViewById(R.id.tv_room_name);
-            tv_date_create = itemView.findViewById(R.id.tvCreateAt);
         }
     }
+
 }

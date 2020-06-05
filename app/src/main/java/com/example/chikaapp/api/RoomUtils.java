@@ -1,7 +1,6 @@
 package com.example.chikaapp.api;
 
-import com.example.chikaapp.SharedPreferencesUtils;
-import com.example.chikaapp.model.DeleteRespones;
+import com.example.chikaapp.model.DeleteResponse;
 import com.example.chikaapp.model.Room;
 import com.example.chikaapp.request.CreateRoomRequest;
 
@@ -33,6 +32,6 @@ public interface RoomUtils {
 
     //delete room by id
     @DELETE("/room/{id}")
-    Call<DeleteRespones> deleteRoom(@Header("Authorization") String token, @Path("id") String id);
+    Call<DeleteResponse> deleteRoom(@Header("Authorization") String token, @Path("id") String id);
 
 }

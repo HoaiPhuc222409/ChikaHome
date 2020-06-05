@@ -1,14 +1,12 @@
 package com.example.chikaapp.fragment;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,22 +14,20 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chikaapp.R;
 import com.example.chikaapp.SharedPreferencesUtils;
 import com.example.chikaapp.action.CustomToast;
 import com.example.chikaapp.action.RecyclerItemClickListener;
-import com.example.chikaapp.activity.LoginActivity;
-import com.example.chikaapp.activity.MainActivity;
 import com.example.chikaapp.adapter.RoomAdapter;
 import com.example.chikaapp.api.ApiRetrofit;
 import com.example.chikaapp.api.RoomUtils;
-import com.example.chikaapp.model.DeleteRespones;
-import com.example.chikaapp.model.Devices;
+import com.example.chikaapp.model.DeleteResponse;
 import com.example.chikaapp.model.Room;
 
+import com.example.chikaapp.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -89,7 +85,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                 new RecyclerItemClickListener(context, rclRoomList, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        listener.sendData(roomArrayList.get(position).getId(), roomArrayList.get(position).getName());
+                        listener.RoomToDevices(roomArrayList.get(position).getId(), roomArrayList.get(position).getName());
                     }
 
                     @Override
@@ -100,7 +96,13 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                         popupMenu.setOnMenuItemClickListener(menuItem -> {
                             switch (menuItem.getItemId()){
                                 case R.id.menu_delete:{
-                                    deleteRoom(SharedPreferencesUtils.loadToken(getContext()),roomArrayList.get(position).getId());
+                                    User user=SharedPreferencesUtils.loadSelf(getContext());
+                                    if (user.getRole().equals("HOME_MASTER")||user.getRole().equals("ADMIN")){
+                                        deleteRoom(SharedPreferencesUtils.loadToken(getContext()),roomArrayList.get(position).getId());
+                                        reloadFragment();
+                                    } else {
+                                        CustomToast.makeText(getContext(),"You're not allow to delete!",CustomToast.LENGTH_LONG,CustomToast.WARNING,false);
+                                    }
                                     break;
                                 }
                             }
@@ -114,8 +116,16 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public void initialize(View view) {
+    private void reloadFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        Fragment fragment = new RoomFragment();
+        transaction.replace(R.id.frame_container, fragment).addToBackStack("roomFragment");
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.commit();
+    }
 
+    public void initialize(View view) {
         rclRoomList = view.findViewById(R.id.rclRoom);
         btnAdd = view.findViewById(R.id.btn_add_room);
         tvNoRoom = view.findViewById(R.id.tvNoRoom);
@@ -124,7 +134,8 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         roomAdapter=new RoomAdapter(new ArrayList<Room>(),getContext());
 
         rclRoomList.setAdapter(roomAdapter);
-        rclRoomList.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(),1);
+        rclRoomList.setLayoutManager(mLayoutManager);
 
         btnAdd.setOnClickListener(this);
 
@@ -154,21 +165,21 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                 .build();
         roomUtils = retrofit.create(RoomUtils.class);
 
-        Call<DeleteRespones> call = roomUtils.deleteRoom(token, roomId);
-        call.enqueue(new Callback<DeleteRespones>() {
+        Call<DeleteResponse> call = roomUtils.deleteRoom(token, roomId);
+        call.enqueue(new Callback<DeleteResponse>() {
             @Override
-            public void onResponse(Call<DeleteRespones> call, Response<DeleteRespones> response) {
-                DeleteRespones deleteRespones;
-                deleteRespones = response.body();
-                if (deleteRespones.isSuccess()){
-                    Toast.makeText(getContext(), deleteRespones.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
+                DeleteResponse deleteResponse;
+                deleteResponse = response.body();
+                if (deleteResponse.isSuccess()){
+                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.SUCCESS,false).show();
                 } else {
-                    Toast.makeText(getContext(), deleteRespones.getMessage(), Toast.LENGTH_SHORT).show();
+                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.WARNING,false).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<DeleteRespones> call, Throwable t) {
+            public void onFailure(Call<DeleteResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Can't load data, please try again!", Toast.LENGTH_SHORT).show();
             }
         });

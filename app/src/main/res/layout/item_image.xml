@@ -13,8 +13,7 @@
         <ImageView
             android:id="@+id/img_image_room"
             android:layout_width="100dp"
-            android:padding="30dp"
-            android:scaleType="centerCrop"
+            android:padding="15dp"
             android:layout_height="100dp"/>
     </androidx.cardview.widget.CardView>
 

@@ -3,8 +3,15 @@
     <string name="name">Tên phòng </string>
     <string name="type_room_name">Điền tên phòng: </string>
     <string name="done">Xong!!</string>
+    <string name="device_name">Tên thiết bị</string>
+    <string name="exp_device">Đèn, Quạt trần, v.v</string>
     <string name="title_home">Home</string>
+    <string name="usable_button">Nút khả dụng:</string>
+    <string name="button_1">Nút 1</string>
+    <string name="button_2">Nút 2</string>
+    <string name="button_3">Nút 3</string>
     <string name="title_room">Room</string>
+    <string name="your_products">Sản phẩm đã mua</string>
     <string name="title_script">Script</string>
     <string name="title_camera">Camera</string>
     <string name="title_auto">Tự động</string>
@@ -16,6 +23,10 @@
     <string name="status_dark">Tối</string>
     <string name="temp_home">Độ C</string>
     <string name="temperature">Nhiệt độ</string>
+    <string name="humidity">Độ ẩm</string>
+    <string name="air_safe">AN TOÀN</string>
+    <string name="air_instability">BẤT ỔN</string>
+    <string name="air_dangerous">NGUY HIỂM</string>
 
     <string name="put_email">Nhập email của bạn</string>
     <string name="check_email_again">Kiểm tra lại email của bạn</string>
@@ -61,4 +72,5 @@
     <string name="air_conditioner">Điều hòa</string>
     <string name="create_date">Ngày tạo: </string>
     <string name="delete_room">Xóa phòng</string>
+    <string name="hello_blank_fragment">Hello</string>
 </resources>

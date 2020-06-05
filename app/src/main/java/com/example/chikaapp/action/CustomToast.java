@@ -42,7 +42,7 @@ public class CustomToast extends Toast {
             img.setImageResource(R.drawable.ic_done_black_24dp);
         } else if (type == 2) {
             linearLayout.setBackgroundResource(R.drawable.warning_shape);
-            img.setImageResource(R.drawable.ic_warning_black_24dp);
+            img.setImageResource(R.drawable.img_warning);
         } else if (type == 3) {
             linearLayout.setBackgroundResource(R.drawable.error_shape);
             img.setImageResource(R.drawable.ic_clear_black_24dp);

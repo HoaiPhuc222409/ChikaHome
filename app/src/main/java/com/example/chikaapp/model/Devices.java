@@ -1,18 +1,34 @@
 package com.example.chikaapp.model;
 
 public class Devices {
+    private String createAt;
     private String id;
-    private String name;
     private String logo;
+    private String name;
+    private boolean state;
     private String roomId;
-    private String buttonId;
+    private String type;
+    private String topic;
+    private int switchButton;
 
-    public Devices(String id, String name, String logo, String roomid, String buttonId) {
+    public Devices(String createAt, String id, String logo, String name, boolean state, String roomId, String type, String topic, int switchButton) {
+        this.createAt = createAt;
         this.id = id;
-        this.name = name;
         this.logo = logo;
-        this.roomId = roomid;
-        this.buttonId = buttonId;
+        this.name = name;
+        this.state = state;
+        this.roomId = roomId;
+        this.type = type;
+        this.topic = topic;
+        this.switchButton = switchButton;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
     }
 
     public String getId() {
@@ -23,6 +39,14 @@ public class Devices {
         this.id = id;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,12 +55,12 @@ public class Devices {
         this.name = name;
     }
 
-    public String getLogo() {
-        return logo;
+    public boolean isState() {
+        return state;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     public String getRoomId() {
@@ -47,11 +71,27 @@ public class Devices {
         this.roomId = roomId;
     }
 
-    public String getButtonId() {
-        return buttonId;
+    public String getType() {
+        return type;
     }
 
-    public void setButtonId(String buttonId) {
-        this.buttonId = buttonId;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public int getSwitchButton() {
+        return switchButton;
+    }
+
+    public void setSwitchButton(int switchButton) {
+        this.switchButton = switchButton;
     }
 }

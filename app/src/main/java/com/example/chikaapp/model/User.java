@@ -2,6 +2,8 @@ package com.example.chikaapp.model;
 
 public class User {
 
+    private long id;
+
     private String avatar;
 
     private String birthday;
@@ -18,7 +20,8 @@ public class User {
 
     private String email;
 
-    public User(String createAt, String avatar, String name, String birthday, String address, String email, String phone, String role ) {
+    public User(long id, String createAt, String avatar, String name, String birthday, String address, String email, String phone, String role ) {
+        this.id = id;
         this.createAt = createAt;
         this.avatar = avatar;
         this.name = name;
@@ -27,6 +30,14 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.role = role;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getAvatar() {

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.chikaapp.action.CustomToast;
+
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -19,9 +21,9 @@ public class MQTTService implements MqttCallback {
 
     final static String URL = "tcp://chika.gq:2502";
 
-    public static String stringTopic="";
+    public static String stringTopic = "";
 
-    public static String stringMessage="";
+    public static String stringMessage = "";
 
     //Create MQTTClient
     String clientId = MqttClient.generateClientId();
@@ -34,7 +36,7 @@ public class MQTTService implements MqttCallback {
 
     public MQTTService(Context context, listener listener) {
         this.context = context;
-        this.listener=listener;
+        this.listener = listener;
 
         Log.i("context", context.toString());
 
@@ -47,11 +49,11 @@ public class MQTTService implements MqttCallback {
         try {
             client = new MqttAndroidClient(context, URL, clientId, new MemoryPersistence());
             client.setCallback(this);
-            IMqttToken token=client.connect(options);
+            IMqttToken token = client.connect(options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    subscribe("6e2b871e-fd51-4006-af7b-a3ab59b17c40/#",2);
+                    CustomToast.makeText(context,"Connected with MQTT",CustomToast.LENGTH_LONG,CustomToast.SUCCESS,false).show();
                 }
 
                 @Override
@@ -66,38 +68,64 @@ public class MQTTService implements MqttCallback {
 
     }
 
-    public void publish(String topic, String message) {
-        MqttMessage mqttMessage = new MqttMessage(message.getBytes());
-        mqttMessage.setRetained(true);
+    public void publish(String topic, String payload) {
         try {
-            client.publish(topic, mqttMessage);
+            if (client.isConnected() == false) {
+                client.connect();
+            }
+
+            MqttMessage message = new MqttMessage();
+            message.setPayload(payload.getBytes());
+            message.setQos(0);
+            client.publish(topic, message,null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i ("hello", "publish succeed! ") ;
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i("hello", "publish failed!") ;
+                }
+            });
         } catch (MqttException e) {
+            Log.e("hello", e.toString());
             e.printStackTrace();
         }
-
     }
 
-    public static MQTTService getInstance(Context context,listener listener) {
+    public static MQTTService getInstance(Context context, listener listener) {
         if (mqttService == null)
-            mqttService = new MQTTService(context,listener);
+            mqttService = new MQTTService(context, listener);
         return mqttService;
     }
 
-    public void subscribe(String topic,int qos){
+    public void subscribe(String topic) {
         try {
-            client.subscribe(topic,qos);
+            client.subscribe(topic, 2, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("hello", "subscribed succeed");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.i("hello", "subscribed failed");
+                }
+            });
+
         } catch (MqttException e) {
             e.printStackTrace();
         }
     }
 
-    public void reconnect(){
+    public void reconnect() {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName("chika");
         options.setPassword("2502".toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
-        while (!client.isConnected()){
+        while (!client.isConnected()) {
             try {
                 client.connect(options);
             } catch (MqttException e) {
@@ -105,8 +133,6 @@ public class MQTTService implements MqttCallback {
             }
         }
     }
-
-
 
     @Override
     public void connectionLost(Throwable cause) {
@@ -117,16 +143,16 @@ public class MQTTService implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        stringTopic=topic;
-        stringMessage=message.toString();
-        listener.onReceive(topic, stringMessage);
+        stringTopic = topic;
+        stringMessage = message.toString();
+        listener.onReceive(stringTopic, stringMessage);
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
     }
-    public interface listener{
+
+    public interface listener {
         void onReceive(String topic, String mess);
     }
-
 }

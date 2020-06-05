@@ -10,44 +10,49 @@
     <TextView
         android:id="@+id/tvDone"
         android:text="@string/done"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:fontFamily="@font/comic"
         android:gravity="end"
         android:layout_marginBottom="70dp"
         android:paddingEnd="30dp"
         android:padding="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 
-    <ImageView
-        android:id="@+id/img_icon_room"
-        android:layout_width="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_height="100dp"
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="50dp"
+        android:id="@+id/cv_img_ic_room"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_icon_room"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+    </androidx.cardview.widget.CardView>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/img_add_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/img_icon_room"
-        android:layout_marginLeft="-30dp"
-        android:layout_marginTop="-30dp"
-        android:layout_toEndOf="@id/img_icon_room"
-        android:src="@drawable/ic_camera_icon_room" />
+        android:background="@drawable/bg_stroke"
+        android:layout_below="@id/cv_img_ic_room"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_add_a_photo" />
 
     <LinearLayout
         android:id="@+id/ln1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img_icon_room"
+        android:layout_below="@+id/img_add_icon"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="18dp"
         android:background="@drawable/bg_stroke"
         android:orientation="horizontal">
@@ -57,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:fontFamily="@font/comic"
             android:text="@string/name"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
@@ -68,10 +72,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:fontFamily="@font/comic"
             android:hint="@string/type_room_name"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:textColor="@android:color/white"
-            android:textColorHint="#B89494"
+            android:textColorHint="#EBD3D3"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -80,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ln1"
-        android:layout_marginTop="-23dp">
+        android:layout_marginTop="-20dp">
 
         <GridView
             android:id="@+id/gridImage"

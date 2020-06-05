@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentProducts"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.chikaapp.fragment.DevicesFragment">
+
+    <RelativeLayout
+        android:id="@+id/rltProducts"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_products"
+            android:text="@string/your_products"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_products"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rltProducts"
+        android:layout_marginTop="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rclProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layoutAnimation="@anim/layout_animation_from_right"
+            android:layout_marginBottom="60dp"/>
+
+    </FrameLayout>
+
+</RelativeLayout>
+

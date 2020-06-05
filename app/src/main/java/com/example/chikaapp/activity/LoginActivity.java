@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     APILogin apiLogin;
 
-
     ImageView imgSetting, imgShowPass, imgHidePass;
     Button btnLogin, btnTest1, btnTest2;
     TextView tvForgetPassword;
@@ -232,20 +231,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.btnTest1:{
                 if (btnTest1.getText().toString().equals("ON")) {
-                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710", "0");
+                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "0");
                     btnTest1.setText("OFF");
                 } else {
-                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710", "1");
+                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "1");
                     btnTest1.setText("ON");
                 }
                 break;
             }
             case R.id.btnTest2:{
                 if (btnTest2.getText().toString().equals("ON")) {
-                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d", "0");
+                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "0");
                     btnTest2.setText("OFF");
                 } else {
-                    mqttService.publish("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d", "1");
+                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "1");
                     btnTest2.setText("ON");
                 }
                 break;
@@ -255,12 +254,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onReceive(String topic, String mess) {
-        if (topic.equals("6e2b871e-fd51-4006-af7b-a3ab59b17c40/6883dd85-c759-428c-98fe-77b00c20c710")){
+        if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button1")){
             if(mess.equals("1")){
                 btnTest1.setText("ON");
             }else btnTest1.setText("OFF");
         }
-        else if (topic.equals("6e2b871e-fd51-4006-af7b-a3ab59b17c40/7f669cb3-2189-4c22-ae09-cb6cc663b96d")){
+        else if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button2")){
             if(mess.equals("1")){
                 btnTest2.setText("ON");
             }else btnTest2.setText("OFF");
