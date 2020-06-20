@@ -73,4 +73,7 @@
     <string name="create_date">Ngày tạo: </string>
     <string name="delete_room">Xóa phòng</string>
     <string name="hello_blank_fragment">Hello</string>
+    <string name="create_device">Tạo thiết bị</string>
+    <string name="type_device">Loại thiết bị</string>
+    <string name="alert_home">Nhà của bạn đã bị xâm nhập</string>
 </resources>

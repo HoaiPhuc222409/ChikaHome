@@ -7,4 +7,5 @@ public interface CommunicationInterface {
     void DeviceToProducts(String idRoom);
     void ProductsToButtonNotUsed(ArrayList arrayList, int maxButton, String idRoom, String topic, String type);
     void ButtonNotUsedToAddDevice(int button, String idRoom, String topic, String type);
+    void ProductsToAddIRDevice(String idRoom, String topic, String type);
 }

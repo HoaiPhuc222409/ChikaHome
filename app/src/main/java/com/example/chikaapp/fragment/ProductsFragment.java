@@ -81,7 +81,7 @@ public class ProductsFragment extends Fragment {
                 if (!type.equals("IRX")){
                     getButtonUsed(token, topic, max, idRoom);
                 } else {
-                    Toast.makeText(getContext(), "IRX", Toast.LENGTH_SHORT).show();
+                    listener.ProductsToAddIRDevice(idRoom,topic,type);
                 }
             }
             @Override

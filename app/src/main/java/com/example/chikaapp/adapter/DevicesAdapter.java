@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chikaapp.R;
+import com.example.chikaapp.dialog.CustomDialogClass;
 import com.example.chikaapp.model.Devices;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -31,7 +33,9 @@ import java.util.ArrayList;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>  {
 
-    final static String URL = "tcp://chika.gq:2502";
+    final static String URL = "tcp://soldier.cloudmqtt.com:16607";
+    final static String UserName = "pcnlljoy";
+    final static String PassWord = "q2zXZf4CSUUE";
 
     static String TAG="debug";
     String clientId = MqttClient.generateClientId();
@@ -67,8 +71,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         holder.img_device.setImageResource(imgId);
 
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(PassWord.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
 
@@ -102,8 +106,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                 stringMessage = message.toString();
                 if (topic.equals(devicesArrayList.get(position).getTopic())){
                    type=devicesArrayList.get(position).getType();
-                   if (type.equals("SW2")||type.equals("SW3")||type.equals("SR2")||type.equals("SR3")){
-                        if (stringMessage.equals("1")){
+                   if (type.equals("SW2")||type.equals("SW3")){
+                        if (stringMessage.equals("true")){
                             holder.tv_Status.setText("ON");
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.green));
                             devicesArrayList.get(position).setState(true);
@@ -112,6 +116,23 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
                             devicesArrayList.get(position).setState(false);
                         }
+                   } else if (type.equals("SR3")||type.equals("SR2")){
+                       JSONObject jsonObject = new JSONObject(stringMessage);
+                       boolean state = jsonObject.getBoolean("state");
+                       int swBtn = jsonObject.getInt("button");
+                       if (swBtn==devicesArrayList.get(position).getSwitchButton()){
+                           if (state){
+                               holder.tv_Status.setText("ON");
+                               holder.tv_Status.setTextColor(context.getResources().getColor(R.color.green));
+                               devicesArrayList.get(position).setState(true);
+                           } else {
+                               holder.tv_Status.setText("OFF");
+                               holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
+                               devicesArrayList.get(position).setState(false);
+                           }
+                       }
+
+
                    } else if (type.equals("SS01")){
                         JSONObject jsonObject=new JSONObject(stringMessage);
                         boolean alert = jsonObject.getBoolean("alert");
@@ -127,6 +148,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
                             devicesArrayList.get(position).setState(false);
                         }
+
 
 
                    }else if (type.equals("SS03")){
@@ -258,8 +280,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
 
     public void reconnect() {
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(PassWord.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
         while (!mqttAndroidClient.isConnected()) {

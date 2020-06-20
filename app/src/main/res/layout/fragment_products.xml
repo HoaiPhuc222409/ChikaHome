@@ -3,6 +3,7 @@
     android:id="@+id/fragmentProducts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F6FA"
     tools:context="com.example.chikaapp.fragment.DevicesFragment">
 
     <RelativeLayout
@@ -26,13 +27,11 @@
         android:layout_height="match_parent"
         android:layout_below="@id/rltProducts"
         android:layout_marginTop="20dp">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rclProducts"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:layoutAnimation="@anim/layout_animation_from_right"
             android:layout_marginBottom="60dp"/>
 

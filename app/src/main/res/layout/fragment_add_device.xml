@@ -45,6 +45,7 @@
             android:id="@+id/edt_device_name"
             android:padding="10dp"
             android:hint="@string/exp_device"
+            android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -61,7 +62,8 @@
             android:gravity="center"
             android:numColumns="3"
             android:padding="20dp"
-            android:visibility="gone" />
+            android:layout_marginBottom="40dp"/>
     </FrameLayout>
 
 </LinearLayout>
+

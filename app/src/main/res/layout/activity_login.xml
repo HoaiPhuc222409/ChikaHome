@@ -75,7 +75,7 @@
                         android:hint="@string/login_username"
                         android:textScaleX="1.1"
                         android:textColor="@android:color/white"
-                        android:textColorHint="#EBD3D3"
+                        android:textColorHint="#FFFFFF"
                         android:textSize="20sp"/>
                     <ImageView
                         android:id="@+id/imgSetting"
@@ -114,7 +114,7 @@
                         android:layout_marginStart="10dp"
                         android:textColor="@android:color/white"
                         android:layout_toRightOf="@+id/img_ic_Password"
-                        android:textColorHint="#EBD3D3"
+                        android:textColorHint="#FFFFFF"
                         android:backgroundTint="#00000000"
                         android:layout_width="280dp"
                         android:layout_height="50dp"
@@ -174,6 +174,7 @@
                     android:id="@+id/btnTest1"
                     android:text="ON"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="60dp"
                     android:layout_marginEnd="60dp"
@@ -188,6 +189,7 @@
                     android:id="@+id/btnTest2"
                     android:text="OFF"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="60dp"
                     android:layout_marginEnd="60dp"

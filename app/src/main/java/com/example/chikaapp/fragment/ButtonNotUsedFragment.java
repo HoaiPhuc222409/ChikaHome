@@ -32,7 +32,9 @@ import java.util.ArrayList;
  */
 public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickListener {
 
-    final static String URL = "tcp://chika.gq:2502";
+    final static String URL = "tcp://soldier.cloudmqtt.com:16607";
+    final static String UserName = "pcnlljoy";
+    final static String PassWord = "q2zXZf4CSUUE";
     String clientId;
     MqttAndroidClient mqttAndroidClient;
     Button button1, button2, button3;
@@ -61,8 +63,8 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
 
         //MQTTConnection
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(PassWord.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(5000);
 

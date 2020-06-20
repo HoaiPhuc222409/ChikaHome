@@ -2,8 +2,6 @@ package com.example.chikaapp.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,13 +14,13 @@ import com.example.chikaapp.fragment.AddDeviceFragment;
 import com.example.chikaapp.fragment.ButtonNotUsedFragment;
 import com.example.chikaapp.fragment.CameraFragment;
 import com.example.chikaapp.fragment.CommunicationInterface;
+import com.example.chikaapp.fragment.AddIRDeviceFragment;
 import com.example.chikaapp.fragment.DevicesFragment;
 import com.example.chikaapp.fragment.HomeFragment;
 import com.example.chikaapp.fragment.ProductsFragment;
 import com.example.chikaapp.fragment.RoomFragment;
 import com.example.chikaapp.fragment.ScriptFragment;
 import com.example.chikaapp.fragment.UserFragment;
-import com.example.chikaapp.model.Devices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -141,6 +139,21 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         bundle.putString("type", type);
         addDeviceFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container,addDeviceFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void ProductsToAddIRDevice(String idRoom, String topic, String type) {
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.addToBackStack(null);
+        AddIRDeviceFragment addIRDeviceFragment = new AddIRDeviceFragment();
+        Bundle bundle =new Bundle();
+        bundle.putString("idRoom", idRoom);
+        bundle.putString("topic", topic);
+        bundle.putString("type", type);
+        addIRDeviceFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container,addIRDeviceFragment);
         transaction.commit();
     }
 

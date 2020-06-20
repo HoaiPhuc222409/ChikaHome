@@ -19,7 +19,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MQTTService implements MqttCallback {
 
-    final static String URL = "tcp://chika.gq:2502";
+    final static String URL = "tcp://soldier.cloudmqtt.com:16607";
+    final static String UserName = "pcnlljoy";
+    final static String Password = "q2zXZf4CSUUE";
 
     public static String stringTopic = "";
 
@@ -41,8 +43,8 @@ public class MQTTService implements MqttCallback {
         Log.i("context", context.toString());
 
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(Password.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
 
@@ -121,8 +123,8 @@ public class MQTTService implements MqttCallback {
 
     public void reconnect() {
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(Password.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
         while (!client.isConnected()) {

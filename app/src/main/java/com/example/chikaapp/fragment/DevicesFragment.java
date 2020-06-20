@@ -55,9 +55,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DevicesFragment extends Fragment implements View.OnClickListener{
+public class DevicesFragment extends Fragment implements View.OnClickListener {
 
-    final static String URL = "tcp://chika.gq:2502";
+    final static String URL = "tcp://soldier.cloudmqtt.com:16607";
+    final static String UserName = "pcnlljoy";
+    final static String PassWord = "q2zXZf4CSUUE";
     String clientId;
     MqttAndroidClient mqttAndroidClient;
 
@@ -92,23 +94,23 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_devices, container, false);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_devices, container, false);
 
         initialize(view);
 
         //MQTTConnection
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName("chika");
-        options.setPassword("2502".toCharArray());
+        options.setUserName(UserName);
+        options.setPassword(PassWord.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
 
         //bundle
-        Bundle bundle=getArguments();
-        if (bundle!=null){
-            idRoom=bundle.getString("idRoom");
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            idRoom = bundle.getString("idRoom");
             tvRoomName.setText(bundle.getString("roomName"));
-            getDataDevices(SharedPreferencesUtils.loadToken(getContext()),idRoom);
+            getDataDevices(SharedPreferencesUtils.loadToken(getContext()), idRoom);
         } else {
             Toast.makeText(getContext(), "Can't receive data!", Toast.LENGTH_SHORT).show();
         }
@@ -123,18 +125,29 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
                                 @Override
                                 public void onItemClick(View view, int position) {
                                     String type = devicesArrayList.get(position).getType();
-                                    if (type.equals("SW2")||type.equals("SW3")||type.equals("SR2")||type.equals("SR3")){
-                                        boolean state = devicesArrayList.get(position).isState();
-                                        if (state){
-                                            publish(devicesArrayList.get(position).getTopic(),"0", type);
-                                        } else {
-                                            publish(devicesArrayList.get(position).getTopic(),"1", type);
-                                        }
-                                    } else if (type.equals("SS01")){
+                                    int swBtn = devicesArrayList.get(position).getSwitchButton();
+                                    boolean state = devicesArrayList.get(position).isState();
+                                    String topic = devicesArrayList.get(position).getTopic();
 
+                                    if (type.equals("SW2") || type.equals("SW3")) {
+                                        if (state) {
+                                            publish(topic, "false", type);
+                                        } else {
+                                            publish(topic, "true", type);
+                                        }
+                                    } else if (type.equals("SR2") || type.equals("SR3")) {
+                                        String RFCommunication;
+                                        if (state) {
+                                            RFCommunication ="{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + false +"}";
+                                            publish(topic, RFCommunication, type);
+                                        } else {
+                                            RFCommunication ="{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + true +"}";
+                                            publish(topic, RFCommunication, type);
+                                        }
                                     }
 
                                 }
+
                                 @Override
                                 public void onLongItemClick(View view, int position) {
                                     Toast.makeText(getContext(), "Long Click", Toast.LENGTH_SHORT).show();
@@ -168,7 +181,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    public void initialize(View view){
+    public void initialize(View view) {
         tvRoomName = view.findViewById(R.id.tv_room_name);
         rclDevices = view.findViewById(R.id.rclDevices);
 
@@ -178,11 +191,11 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
         imgRefresh = view.findViewById(R.id.img_refresh);
         imgAddDevice = view.findViewById(R.id.img_add_device);
 
-        devicesArrayList=new ArrayList<>();
-        devicesAdapter=new DevicesAdapter(new ArrayList<Devices>(),getContext());
+        devicesArrayList = new ArrayList<>();
+        devicesAdapter = new DevicesAdapter(new ArrayList<Devices>(), getContext());
 
         rclDevices.setAdapter(devicesAdapter);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(),2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         rclDevices.setLayoutManager(mLayoutManager);
 
         imgRefresh.setOnClickListener(this);
@@ -200,7 +213,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    public void deleteDevice(String token, String deviceId){
+    public void deleteDevice(String token, String deviceId) {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiRetrofit.URL)
@@ -214,12 +227,13 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
             public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
                 DeleteResponse deleteResponse;
                 deleteResponse = response.body();
-                if (deleteResponse.isSuccess()){
-                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.SUCCESS,false).show();
+                if (deleteResponse.isSuccess()) {
+                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT, CustomToast.SUCCESS, false).show();
                 } else {
-                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.WARNING,false).show();
+                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT, CustomToast.WARNING, false).show();
                 }
             }
+
             @Override
             public void onFailure(Call<DeleteResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Can't load data, please try again!", Toast.LENGTH_SHORT).show();
@@ -234,24 +248,24 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
                 .baseUrl(ApiRetrofit.URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-         deviceUtils = retrofit.create(DeviceUtils.class);
+        deviceUtils = retrofit.create(DeviceUtils.class);
 
-        Call<ArrayList<Devices>> call = deviceUtils.getDevices(token,idRoom);
+        Call<ArrayList<Devices>> call = deviceUtils.getDevices(token, idRoom);
         call.enqueue(new Callback<ArrayList<Devices>>() {
             @Override
             public void onResponse(Call<ArrayList<Devices>> call, Response<ArrayList<Devices>> response) {
-                ArrayList<Devices> devices=new ArrayList<>();
+                ArrayList<Devices> devices = new ArrayList<>();
                 devices = response.body();
-                if (devices!=null){
+                if (devices != null) {
                     loadingDialog.dismiss();
-                    devicesArrayList=devices;
+                    devicesArrayList = devices;
                     devicesAdapter.updateList(devices);
                     devicesAdapter.notifyDataSetChanged();
 
-                    CustomToast.makeText(getContext(),"Let's start!",CustomToast.LENGTH_LONG,CustomToast.SUCCESS,false).show();
-                }else {
+                    CustomToast.makeText(getContext(), "Let's start!", CustomToast.LENGTH_LONG, CustomToast.SUCCESS, false).show();
+                } else {
                     loadingDialog.dismiss();
-                    CustomToast.makeText(getContext(),"Fail",CustomToast.LENGTH_LONG,CustomToast.CONFUSING,false).show();
+                    CustomToast.makeText(getContext(), "Fail", CustomToast.LENGTH_LONG, CustomToast.CONFUSING, false).show();
                 }
 
             }
@@ -259,19 +273,19 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onFailure(Call<ArrayList<Devices>> call, Throwable t) {
                 loadingDialog.dismiss();
-                CustomToast.makeText(getContext(),"Failure",CustomToast.LENGTH_LONG,CustomToast.WARNING,false).show();
+                CustomToast.makeText(getContext(), "Failure", CustomToast.LENGTH_LONG, CustomToast.WARNING, false).show();
             }
         });
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.img_refresh:{
-                getDataDevices(SharedPreferencesUtils.loadToken(getContext()),idRoom);
+        switch (view.getId()) {
+            case R.id.img_refresh: {
+                getDataDevices(SharedPreferencesUtils.loadToken(getContext()), idRoom);
                 break;
             }
-            case R.id.img_add_device:{
+            case R.id.img_add_device: {
                 listener.DeviceToProducts(idRoom);
                 break;
             }
@@ -287,21 +301,21 @@ public class DevicesFragment extends Fragment implements View.OnClickListener{
             MqttMessage message = new MqttMessage();
             message.setPayload(payload.getBytes());
             message.setQos(2);
-            if (type.equals("SW2")||type.equals("SW3")||type.equals("SR2")||equals("SR3")){
+            if (type.equals("SW2") || type.equals("SW3")) {
                 message.setRetained(true);
             } else {
                 message.setRetained(false);
             }
 
-            mqttAndroidClient.publish(topic, message,null, new IMqttActionListener() {
+            mqttAndroidClient.publish(topic, message, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i ("debug", "publish succeed! ") ;
+                    Log.i("debug", "topic "+topic+" mess:"+message);
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("debug", "publish failed!") ;
+                    Log.i("debug", "publish failed!");
                 }
             });
         } catch (MqttException e) {

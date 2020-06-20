@@ -43,7 +43,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MQTTService.listener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     APILogin apiLogin;
 
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edtUsername, edtPassword;
 
     ACProgressPie dialog;
-    MQTTService mqttService;
+//    MQTTService mqttService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,13 +130,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvForgetPassword=findViewById(R.id.tvForgetPassword);
 
         btnLogin.setOnClickListener(this);
-        btnTest1.setOnClickListener(this);
-        btnTest2.setOnClickListener(this);
+//        btnTest1.setOnClickListener(this);
+//        btnTest2.setOnClickListener(this);
         tvForgetPassword.setOnClickListener(this);
         imgShowPass.setOnClickListener(this);
         imgHidePass.setOnClickListener(this);
         imgSetting.setOnClickListener(this);
-        mqttService=MQTTService.getInstance(getApplicationContext(), this);
+//        mqttService=MQTTService.getInstance(getApplicationContext(), this);
 
     }
 
@@ -229,41 +229,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 showPopupMenu();
                 break;
             }
-            case R.id.btnTest1:{
-                if (btnTest1.getText().toString().equals("ON")) {
-                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "0");
-                    btnTest1.setText("OFF");
-                } else {
-                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "1");
-                    btnTest1.setText("ON");
-                }
-                break;
-            }
-            case R.id.btnTest2:{
-                if (btnTest2.getText().toString().equals("ON")) {
-                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "0");
-                    btnTest2.setText("OFF");
-                } else {
-                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "1");
-                    btnTest2.setText("ON");
-                }
-                break;
-            }
+//            case R.id.btnTest1:{
+//                if (btnTest1.getText().toString().equals("ON")) {
+//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "0");
+//                    btnTest1.setText("OFF");
+//                } else {
+//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "1");
+//                    btnTest1.setText("ON");
+//                }
+//                break;
+//            }
+//            case R.id.btnTest2:{
+//                if (btnTest2.getText().toString().equals("ON")) {
+//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "0");
+//                    btnTest2.setText("OFF");
+//                } else {
+//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "1");
+//                    btnTest2.setText("ON");
+//                }
+//                break;
+//            }
         }
     }
 
-    @Override
-    public void onReceive(String topic, String mess) {
-        if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button1")){
-            if(mess.equals("1")){
-                btnTest1.setText("ON");
-            }else btnTest1.setText("OFF");
-        }
-        else if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button2")){
-            if(mess.equals("1")){
-                btnTest2.setText("ON");
-            }else btnTest2.setText("OFF");
-        }
-
-    }
+//    @Override
+//    public void onReceive(String topic, String mess) {
+//        if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button1")){
+//            if(mess.equals("1")){
+//                btnTest1.setText("ON");
+//            }else btnTest1.setText("OFF");
+//        }
+//        else if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button2")){
+//            if(mess.equals("1")){
+//                btnTest2.setText("ON");
+//            }else btnTest2.setText("OFF");
+//        }
+//
+//    }
 }
