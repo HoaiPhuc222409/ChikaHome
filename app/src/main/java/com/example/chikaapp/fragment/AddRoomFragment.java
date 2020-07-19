@@ -88,13 +88,11 @@ public class AddRoomFragment extends Fragment implements View.OnClickListener{
     }
 
     public void initialize(View view){
-        img_Add = view.findViewById(R.id.img_add_icon);
         img_Room=view.findViewById(R.id.img_icon_room);
         edt_Room_Name=view.findViewById(R.id.edt_room_name);
         tvDone=view.findViewById(R.id.tvDone);
 
         tvDone.setOnClickListener(this);
-        img_Add.setOnClickListener(this);
 
         List<Image> image_details = getListData();
 
@@ -115,9 +113,6 @@ public class AddRoomFragment extends Fragment implements View.OnClickListener{
             case R.id.tvDone:{
                 createRoom();
                 break;
-            }
-            case R.id.img_add_icon:{
-                gridView.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.chikaapp.fragment;
 
+import com.example.chikaapp.model.Scripts;
+
 import java.util.ArrayList;
 
 public interface CommunicationInterface {
@@ -8,4 +10,6 @@ public interface CommunicationInterface {
     void ProductsToButtonNotUsed(ArrayList arrayList, int maxButton, String idRoom, String topic, String type);
     void ButtonNotUsedToAddDevice(int button, String idRoom, String topic, String type);
     void ProductsToAddIRDevice(String idRoom, String topic, String type);
+    void UserToEditUserInfo();
+    void ScriptToDetailScripts(Scripts scripts);
 }

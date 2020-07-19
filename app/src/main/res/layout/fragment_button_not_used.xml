@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:text="Hold button to confirm\nClick to test button"
+        android:text="@string/button_not_used"
         android:textAlignment="center"
         android:layout_marginTop="200dp"
         android:layout_width="match_parent"

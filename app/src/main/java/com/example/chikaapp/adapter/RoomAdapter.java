@@ -27,7 +27,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     Context context;
     public int roomId;
     public int roomImg;
-    public int radius;
 
     public RoomAdapter(ArrayList<Room> roomArrayList, Context context) {
         this.roomArrayList = roomArrayList;
@@ -51,7 +50,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Room room = roomArrayList.get(position);
-        radius = 3;
         roomId= getRoomIcon(room.getLogo());
         roomImg=getBackgroundImage(room.getLogo());
 

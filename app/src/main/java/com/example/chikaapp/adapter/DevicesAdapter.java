@@ -1,6 +1,10 @@
 package com.example.chikaapp.adapter;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chikaapp.R;
@@ -29,6 +35,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.json.JSONObject;
 
+import java.nio.channels.Channel;
 import java.util.ArrayList;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>  {
@@ -97,16 +104,16 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             @Override
             public void connectionLost(Throwable cause) {
                 Log.i(TAG, "connection lost");
-                reconnect();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 String type, stringMessage;
                 stringMessage = message.toString();
                 if (topic.equals(devicesArrayList.get(position).getTopic())){
-                   type=devicesArrayList.get(position).getType();
-                   if (type.equals("SW2")||type.equals("SW3")){
+                    type=devicesArrayList.get(position).getType();
+                    if (type.equals("SW2")||type.equals("SW3")){
                         if (stringMessage.equals("true")){
                             holder.tv_Status.setText("ON");
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.green));
@@ -116,24 +123,24 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
                             devicesArrayList.get(position).setState(false);
                         }
-                   } else if (type.equals("SR3")||type.equals("SR2")){
-                       JSONObject jsonObject = new JSONObject(stringMessage);
-                       boolean state = jsonObject.getBoolean("state");
-                       int swBtn = jsonObject.getInt("button");
-                       if (swBtn==devicesArrayList.get(position).getSwitchButton()){
-                           if (state){
-                               holder.tv_Status.setText("ON");
-                               holder.tv_Status.setTextColor(context.getResources().getColor(R.color.green));
-                               devicesArrayList.get(position).setState(true);
-                           } else {
-                               holder.tv_Status.setText("OFF");
-                               holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
-                               devicesArrayList.get(position).setState(false);
-                           }
-                       }
+                    } else if (type.equals("SR3")||type.equals("SR2")){
+                        JSONObject jsonObject = new JSONObject(stringMessage);
+                        boolean state = jsonObject.getBoolean("state");
+                        int swBtn = jsonObject.getInt("button");
+                        if (swBtn==devicesArrayList.get(position).getSwitchButton()){
+                            if (state){
+                                holder.tv_Status.setText("ON");
+                                holder.tv_Status.setTextColor(context.getResources().getColor(R.color.green));
+                                devicesArrayList.get(position).setState(true);
+                            } else {
+                                holder.tv_Status.setText("OFF");
+                                holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
+                                devicesArrayList.get(position).setState(false);
+                            }
+                        }
 
 
-                   } else if (type.equals("SS01")){
+                    } else if (type.equals("SS01")){
                         JSONObject jsonObject=new JSONObject(stringMessage);
                         boolean alert = jsonObject.getBoolean("alert");
                         boolean state = jsonObject.getBoolean("state");
@@ -148,41 +155,54 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
                             holder.tv_Status.setTextColor(context.getResources().getColor(R.color.red));
                             devicesArrayList.get(position).setState(false);
                         }
+                        if (alert){
+                            NotificationManager notificationManager =
+                                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                            String channelId = "some_channel_id";
+                            CharSequence channelName = "Some Channel";
+                            int importance = NotificationManager.IMPORTANCE_LOW;
+                            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+                            notificationChannel.enableLights(true);
+                            notificationChannel.setLightColor(Color.RED);
+                            notificationChannel.enableVibration(true);
+                            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                            notificationManager.createNotificationChannel(notificationChannel);
+                        }
 
 
 
-                   }else if (type.equals("SS03")){
-                       holder.img_device.setVisibility(View.GONE);
-                       holder.tv_Status.setVisibility(View.GONE);
-                       holder.tv_air_quality.setVisibility(View.VISIBLE);
-                       holder.img_status_air_quality.setVisibility(View.VISIBLE);
-                       JSONObject jsonObject = new JSONObject(stringMessage);
-                       float temperature = (float)jsonObject.getDouble("temperature");
-                       float humidity = (float) jsonObject.getLong("humidity");
-                       float aqi = (float)jsonObject.getDouble("aqi");
+                    }else if (type.equals("SS03")){
+                        holder.img_device.setVisibility(View.GONE);
+                        holder.tv_Status.setVisibility(View.GONE);
+                        holder.tv_air_quality.setVisibility(View.VISIBLE);
+                        holder.img_status_air_quality.setVisibility(View.VISIBLE);
+                        JSONObject jsonObject = new JSONObject(stringMessage);
+                        float temperature = (float)jsonObject.getDouble("temperature");
+                        float humidity = (float) jsonObject.getLong("humidity");
+                        float aqi = (float)jsonObject.getDouble("aqi");
 
-                       holder.tv_humidity.setText(""+humidity);
-                       holder.tv_temperature.setText(""+temperature);
+                        holder.tv_humidity.setText(""+humidity);
+                        holder.tv_temperature.setText(""+temperature);
 
-                       if (aqi>0&&aqi<=2){
+                        if (aqi>0&&aqi<=2){
                             holder.tv_air_quality.setText(R.string.air_safe);
                             holder.img_status_air_quality.setImageResource(R.drawable.img_safe1);
                             holder.tv_air_quality.setTextColor(context.getResources().getColor(R.color.green));
-                       } else if (aqi>2&&aqi<6.5){
-                           holder.tv_air_quality.setText(R.string.air_instability);
-                           holder.img_status_air_quality.setImageResource(R.drawable.img_warning);
-                           holder.tv_air_quality.setTextColor(context.getResources().getColor(R.color.orange));
-                       } else {
-                           holder.tv_air_quality.setText(R.string.air_dangerous);
-                           holder.img_status_air_quality.setImageResource(R.drawable.img_dangerous);
-                           holder.tv_air_quality.setTextColor(context.getResources().getColor(R.color.red));
-                       }
+                        } else if (aqi>2&&aqi<6.5){
+                            holder.tv_air_quality.setText(R.string.air_instability);
+                            holder.img_status_air_quality.setImageResource(R.drawable.img_warning);
+                            holder.tv_air_quality.setTextColor(context.getResources().getColor(R.color.orange));
+                        } else {
+                            holder.tv_air_quality.setText(R.string.air_dangerous);
+                            holder.img_status_air_quality.setImageResource(R.drawable.img_dangerous);
+                            holder.tv_air_quality.setTextColor(context.getResources().getColor(R.color.red));
+                        }
 
-                   }
+                    }
 
                 }
             }
-
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
                 Log.i(TAG, "msg delivered");
@@ -207,6 +227,25 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             img_status_air_quality = itemView.findViewById(R.id.img_air_quality);
             tv_humidity = itemView.findViewById(R.id.humidity);
             tv_temperature=itemView.findViewById(R.id.temperature);
+        }
+    }
+
+    public void disconnect() {
+        try {
+            IMqttToken disToken = mqttAndroidClient.disconnect();
+            disToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("fuck", "disconnect success");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
         }
     }
 
@@ -254,6 +293,9 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             case "selling-fan":
                 imgId=R.drawable.selling_fan_icon;
                 break;
+            case "create":
+                imgId=R.drawable.ic_add_circle;
+                break;
             default: imgId = R.drawable.bg_button;
         }
         return imgId;
@@ -275,21 +317,6 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
 
         } catch (MqttException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void reconnect() {
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(UserName);
-        options.setPassword(PassWord.toCharArray());
-        options.setCleanSession(true);
-        options.setKeepAliveInterval(1000);
-        while (!mqttAndroidClient.isConnected()) {
-            try {
-                mqttAndroidClient.connect(options);
-            } catch (MqttException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

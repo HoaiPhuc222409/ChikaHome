@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Chika</string>
     <string name="check_connect">Please check your connection</string>
-    <string name="name">Room name: </string>
+    <string name="room_name">Room name: </string>
     <string name="type_room_name">Type your room"'s name</string>
     <string name="your_products">Your products</string>
     <string name="done">Done</string>
@@ -29,6 +29,12 @@
     <string name="air_instability">INSTABILITY</string>
     <string name="air_dangerous">DANGEROUS</string>
     <string name="alert_home">Your home has been compromised</string>
+    <string name="edit_info">Edit information</string>
+    <string name="support">Support</string>
+    <string name="phone">Phone:</string>
+    <string name="email">Email:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="address">Address:</string>
 
     <string name="put_email">Input your email:</string>
     <string name="check_email_again">Please check your Email again!</string>
@@ -37,7 +43,7 @@
     <string name="send">Send</string>
     <string name="ok">It\'s ok, now check your Email</string>
     <string name="setting_ip">Set IP</string>
-    <string name="sign_out" translatable="false">Sign out</string>
+    <string name="sign_out">Sign out</string>
     <string name="account">Account</string>
     <string name="english">English</string>
     <string name="remember">Remember me</string>
@@ -60,6 +66,7 @@
     <string name="garage">Garage</string>
     <string name="security">Security</string>
     <string name="script">Script</string>
+    <string name="script_detail">Script detail</string>
 
     <!--Room-->
     <string name="floor1">Floor 1</string>
@@ -83,6 +90,14 @@
     <string name="create_device">Create Device</string>
     <string name="type_device">Type of Device</string>
 
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="day_active">Days Actived:</string>
+    <string name="time_active">Time Active:</string>
+    <string name="device_list_active">Devices Active</string>
+    <string name="button_not_used">Click to test or Hold to set up!</string>
+    <string name="delete_scripts">Delete Scripts</string>
+    <string name="back">Back</string>
+    <string name="status_device">Device status has been set:</string>
 </resources>

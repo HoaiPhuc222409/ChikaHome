@@ -31,15 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:id="@+id/img_add_device"
-            android:src="@drawable/ic_add_circle"
-            android:layout_marginEnd="10dp"
-            android:paddingTop="7dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </RelativeLayout>
     <LinearLayout
         android:gravity="center_horizontal"

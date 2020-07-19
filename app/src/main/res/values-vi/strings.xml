@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="name">Tên phòng </string>
+    <string name="room_name">Tên phòng </string>
     <string name="type_room_name">Điền tên phòng: </string>
     <string name="done">Xong!!</string>
     <string name="device_name">Tên thiết bị</string>
     <string name="exp_device">Đèn, Quạt trần, v.v</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Chung</string>
     <string name="usable_button">Nút khả dụng:</string>
     <string name="button_1">Nút 1</string>
     <string name="button_2">Nút 2</string>
     <string name="button_3">Nút 3</string>
-    <string name="title_room">Room</string>
+    <string name="title_room">Phòng</string>
     <string name="your_products">Sản phẩm đã mua</string>
-    <string name="title_script">Script</string>
+    <string name="title_script">Kịch bản</string>
     <string name="title_camera">Camera</string>
     <string name="title_auto">Tự động</string>
     <string name="title_account">Tài khoản</string>
@@ -76,4 +76,18 @@
     <string name="create_device">Tạo thiết bị</string>
     <string name="type_device">Loại thiết bị</string>
     <string name="alert_home">Nhà của bạn đã bị xâm nhập</string>
+    <string name="edit_info">Chỉnh sửa thông tin</string>
+    <string name="support">Hỗ trợ</string>
+    <string name="phone">Số điện thoại:</string>
+    <string name="email">Email:</string>
+    <string name="birthday">Ngày sinh:</string>
+    <string name="address">Địa chỉ:</string>
+    <string name="script_detail">Chi tiết kịch bản</string>
+    <string name="day_active">"Ngày kích hoạt: "</string>
+    <string name="time_active">Thời gian:</string>
+    <string name="device_list_active">Danh sách thiết bị kích hoạt</string>
+    <string name="button_not_used">Nhấn thử hoặc giữ để thiết lập!</string>
+    <string name="delete_scripts">Xóa kịch bản</string>
+    <string name="back">Trở về</string>
+    <string name="status_device">Trạng thái thiết bị đã thiết lập:</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.chikaapp.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -16,6 +17,8 @@ import com.example.chikaapp.R;
 import com.example.chikaapp.SharedPreferencesUtils;
 import com.example.chikaapp.model.Token;
 
+import java.util.Locale;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private ImageView logo, text;
@@ -25,9 +28,9 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         initialize();
+
     }
 
     private void initialize() {
@@ -35,6 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                changeLanguage("vi");
                 String token = SharedPreferencesUtils.loadToken(getBaseContext());
                 if (token.equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
@@ -44,5 +48,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         };
         Handler handler = new Handler();
         handler.postDelayed(runnable, 2000);
+    }
+
+    public void changeLanguage(String language) {
+        Locale locale = new Locale(language);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 }

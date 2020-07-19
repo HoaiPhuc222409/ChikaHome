@@ -63,8 +63,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     String clientId;
     MqttAndroidClient mqttAndroidClient;
 
-    String idRoom, state;
-    Switch stateSwitch;
+    String idRoom;
     DeviceUtils deviceUtils;
     TextView tvRoomName, tv_humidity, tv_temperature;
     ImageView imgRefresh, imgAddDevice;
@@ -73,7 +72,6 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     ArrayList<Devices> devicesArrayList;
     RecyclerView rclDevices;
     CommunicationInterface listener;
-    SwipeRefreshLayout refreshLayout;
 
     ACProgressPie loadingDialog;
 
@@ -88,7 +86,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         if (context instanceof CommunicationInterface) {
             listener = (CommunicationInterface) context;
         } else {
-            throw new RuntimeException(context.toString() + "Can phai implement");
+            throw new RuntimeException(context.toString());
         }
     }
 
@@ -144,6 +142,8 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
                                             RFCommunication ="{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + true +"}";
                                             publish(topic, RFCommunication, type);
                                         }
+                                    } else if (type.equals("create")){
+                                        listener.DeviceToProducts(idRoom);
                                     }
 
                                 }
@@ -183,24 +183,23 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
 
     public void initialize(View view) {
         tvRoomName = view.findViewById(R.id.tv_room_name);
-        rclDevices = view.findViewById(R.id.rclDevices);
-
         tv_humidity = view.findViewById(R.id.humidity);
         tv_temperature = view.findViewById(R.id.temperature);
-
         imgRefresh = view.findViewById(R.id.img_refresh);
-        imgAddDevice = view.findViewById(R.id.img_add_device);
 
+        //adapter
         devicesArrayList = new ArrayList<>();
         devicesAdapter = new DevicesAdapter(new ArrayList<Devices>(), getContext());
 
+        //recyclerView
+        rclDevices = view.findViewById(R.id.rclDevices);
         rclDevices.setAdapter(devicesAdapter);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         rclDevices.setLayoutManager(mLayoutManager);
 
         imgRefresh.setOnClickListener(this);
-        imgAddDevice.setOnClickListener(this);
 
+        //loadingDialog
         loadingDialog = new ACProgressPie.Builder(getContext())
                 .ringColor(Color.WHITE)
                 .pieColor(Color.WHITE)
@@ -259,10 +258,9 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
                 if (devices != null) {
                     loadingDialog.dismiss();
                     devicesArrayList = devices;
+                    devices.add(new Devices(null, null, "create","Create new device",false,null,"create",null, 1));
                     devicesAdapter.updateList(devices);
                     devicesAdapter.notifyDataSetChanged();
-
-                    CustomToast.makeText(getContext(), "Let's start!", CustomToast.LENGTH_LONG, CustomToast.SUCCESS, false).show();
                 } else {
                     loadingDialog.dismiss();
                     CustomToast.makeText(getContext(), "Fail", CustomToast.LENGTH_LONG, CustomToast.CONFUSING, false).show();
@@ -283,10 +281,6 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.img_refresh: {
                 getDataDevices(SharedPreferencesUtils.loadToken(getContext()), idRoom);
-                break;
-            }
-            case R.id.img_add_device: {
-                listener.DeviceToProducts(idRoom);
                 break;
             }
         }
@@ -324,5 +318,29 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disconnect();
+        devicesAdapter.disconnect();
+    }
 
+    public void disconnect() {
+        try {
+            IMqttToken disToken = mqttAndroidClient.disconnect();
+            disToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("fuck", "disconnect success");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 }

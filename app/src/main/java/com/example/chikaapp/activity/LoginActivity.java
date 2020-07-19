@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edtUsername, edtPassword;
 
     ACProgressPie dialog;
+
 //    MQTTService mqttService;
 
     @Override
@@ -128,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtUsername=findViewById(R.id.edtUserLogin);
         edtPassword=findViewById(R.id.edtPassword);
         tvForgetPassword=findViewById(R.id.tvForgetPassword);
-
+//        changeLanguage("vi");
         btnLogin.setOnClickListener(this);
 //        btnTest1.setOnClickListener(this);
 //        btnTest2.setOnClickListener(this);
@@ -137,7 +138,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imgHidePass.setOnClickListener(this);
         imgSetting.setOnClickListener(this);
 //        mqttService=MQTTService.getInstance(getApplicationContext(), this);
-
     }
 
     public void changeLanguage(String language) {
@@ -187,21 +187,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btnLogin:{
+        switch (view.getId()) {
+            case R.id.btnLogin: {
                 String user = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
 
-                if (user.isEmpty()){
+                if (user.isEmpty()) {
                     edtUsername.setError("Not available");
-                } else if (password.isEmpty()){
+                } else if (password.isEmpty()) {
                     edtPassword.setError("Not available");
                 } else {
                     getToken(user, password);
                 }
                 break;
             }
-            case R.id.imgHidePass:{
+            case R.id.imgHidePass: {
                 imgHidePass.setVisibility(View.INVISIBLE);
                 imgShowPass.setVisibility(View.VISIBLE);
 
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             }
-            case R.id.imgShowPass:{
+            case R.id.imgShowPass: {
                 imgShowPass.setVisibility(View.INVISIBLE);
                 imgHidePass.setVisibility(View.VISIBLE);
 
@@ -219,51 +219,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             }
-            case R.id.tvForgetPassword:{
+            case R.id.tvForgetPassword: {
                 Intent intent1 = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(intent1);
 
                 break;
             }
-            case R.id.imgSetting:{
+            case R.id.imgSetting: {
                 showPopupMenu();
                 break;
             }
-//            case R.id.btnTest1:{
-//                if (btnTest1.getText().toString().equals("ON")) {
-//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "0");
-//                    btnTest1.setText("OFF");
-//                } else {
-//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button1", "1");
-//                    btnTest1.setText("ON");
-//                }
-//                break;
-//            }
-//            case R.id.btnTest2:{
-//                if (btnTest2.getText().toString().equals("ON")) {
-//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "0");
-//                    btnTest2.setText("OFF");
-//                } else {
-//                    mqttService.publish("b36e333e-3800-4450-84cd-6f90e7e0f721/button2", "1");
-//                    btnTest2.setText("ON");
-//                }
-//                break;
-//            }
         }
     }
-
-//    @Override
-//    public void onReceive(String topic, String mess) {
-//        if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button1")){
-//            if(mess.equals("1")){
-//                btnTest1.setText("ON");
-//            }else btnTest1.setText("OFF");
-//        }
-//        else if (topic.equals("b36e333e-3800-4450-84cd-6f90e7e0f721/button2")){
-//            if(mess.equals("1")){
-//                btnTest2.setText("ON");
-//            }else btnTest2.setText("OFF");
-//        }
-//
-//    }
 }

@@ -1,6 +1,9 @@
 package com.example.chikaapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -15,12 +18,16 @@ import com.example.chikaapp.fragment.ButtonNotUsedFragment;
 import com.example.chikaapp.fragment.CameraFragment;
 import com.example.chikaapp.fragment.CommunicationInterface;
 import com.example.chikaapp.fragment.AddIRDeviceFragment;
+import com.example.chikaapp.fragment.DetailScriptsFragment;
 import com.example.chikaapp.fragment.DevicesFragment;
+import com.example.chikaapp.fragment.EditUserInfoFragment;
 import com.example.chikaapp.fragment.HomeFragment;
 import com.example.chikaapp.fragment.ProductsFragment;
 import com.example.chikaapp.fragment.RoomFragment;
 import com.example.chikaapp.fragment.ScriptFragment;
 import com.example.chikaapp.fragment.UserFragment;
+import com.example.chikaapp.model.Scripts;
+import com.example.chikaapp.request.EditInfoUserRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -31,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+//        FragmentManager fragmentManager=getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -72,8 +79,37 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         }
     };
 
+//    @Override
+//    public void onBackPressed() {
+//        AlertDialog.Builder builder
+//                = new AlertDialog
+//                .Builder(MainActivity.this);
+//
+//        builder.setMessage("Do you want to exit ?");
+//        builder.setTitle("Alert !");
+//        builder.setCancelable(false);
+//        builder
+//                .setPositiveButton(
+//                        "Yes",
+//                        (dialog, which) -> {
+//
+//                            finish();
+//                        });
+//        builder
+//                .setNegativeButton(
+//                        "No",
+//                        (dialog, which) -> {
+//                            dialog.cancel();
+//                        });
+//
+//        // Create the Alert dialog
+//        AlertDialog alertDialog = builder.create();
+//
+//        // Show the Alert Dialog box
+//        alertDialog.show();
+//    }
+
     public void loadFragment(Fragment fragment) {
-        // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 //        transaction.setCustomAnimations(R.anim.slide_in_bot,R.anim.slide_out_bot);
         transaction.replace(R.id.frame_container, fragment);
@@ -154,6 +190,29 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         bundle.putString("type", type);
         addIRDeviceFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container,addIRDeviceFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void ScriptToDetailScripts(Scripts scripts) {
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.addToBackStack(null);
+        DetailScriptsFragment detailScriptsFragment = new DetailScriptsFragment();
+        Bundle bundle =new Bundle();
+        bundle.putSerializable("scripts", scripts);
+        detailScriptsFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container,detailScriptsFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void UserToEditUserInfo() {
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.addToBackStack(null);
+        EditUserInfoFragment editUserInfoFragment = new EditUserInfoFragment();
+        transaction.replace(R.id.frame_container,editUserInfoFragment);
         transaction.commit();
     }
 

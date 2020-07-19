@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_new"
+    android:background="#61AACC"
     tools:context="com.example.chikaapp.fragment.UserFragment">
 
     <RelativeLayout
@@ -21,7 +21,8 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewImageProfile"
+                android:padding="5dp"
+                android:id="@+id/cardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="50dp">
@@ -43,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingStart="16dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/red"
                     android:textSize="20sp" />
 
                 <TextView
@@ -52,7 +53,7 @@
                     android:layout_height="30dp"
                     android:gravity="left"
                     android:paddingStart="16dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/red"
                     android:textSize="16sp"
                     android:textStyle="italic" />
 
@@ -61,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:paddingStart="16dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/red"
                     android:textSize="16sp"
                     android:textStyle="italic" />
             </LinearLayout>
@@ -79,11 +80,11 @@
             android:padding="10dp"
             android:text="Add Home User"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="@color/red"
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btnLogOut"
+            android:id="@+id/btn_edit_user_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btn_add_HomeUser"
@@ -92,7 +93,33 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_stroke"
             android:padding="10dp"
+            android:text="@string/edit_info"
+            android:textColor="@color/red"/>
+
+        <Button
+            android:id="@+id/btn_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_edit_user_info"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_stroke"
+            android:padding="10dp"
+            android:text="@string/support"
+            android:textColor="@color/red"/>
+
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_support"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_stroke"
+            android:padding="10dp"
             android:text="@string/sign_out"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/red" />
     </RelativeLayout>
 </FrameLayout>

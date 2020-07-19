@@ -1,6 +1,8 @@
 package com.example.chikaapp.mqtt;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +19,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressPie;
+
 public class MQTTService implements MqttCallback {
 
     final static String URL = "tcp://soldier.cloudmqtt.com:16607";
@@ -30,6 +35,7 @@ public class MQTTService implements MqttCallback {
     //Create MQTTClient
     String clientId = MqttClient.generateClientId();
     MqttAndroidClient client;
+    ACProgressPie loadingDialog;
 
     private static MQTTService mqttService;
     private Context context;
@@ -40,7 +46,9 @@ public class MQTTService implements MqttCallback {
         this.context = context;
         this.listener = listener;
 
-        Log.i("context", context.toString());
+    }
+
+    public void connect(){
 
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(UserName);
@@ -49,28 +57,30 @@ public class MQTTService implements MqttCallback {
         options.setKeepAliveInterval(1000);
 
         try {
+
             client = new MqttAndroidClient(context, URL, clientId, new MemoryPersistence());
             client.setCallback(this);
             IMqttToken token = client.connect(options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    CustomToast.makeText(context,"Connected with MQTT",CustomToast.LENGTH_LONG,CustomToast.SUCCESS,false).show();
+                    listener.onConnected(true);
+                    Log.i("fuck", "connected");
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Toast.makeText(context, "Not connect", Toast.LENGTH_SHORT).show();
+                    listener.onConnected(false);
+                    Log.i("fuck", "not connected");
                 }
             });
         } catch (MqttException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    public void publish(String topic, String payload) {
+
+    public void publish(String topic, String payload, String type) {
         try {
             if (client.isConnected() == false) {
                 client.connect();
@@ -78,16 +88,22 @@ public class MQTTService implements MqttCallback {
 
             MqttMessage message = new MqttMessage();
             message.setPayload(payload.getBytes());
-            message.setQos(0);
-            client.publish(topic, message,null, new IMqttActionListener() {
+            message.setQos(2);
+            if (type.equals("SW2") || type.equals("SW3")) {
+                message.setRetained(true);
+            } else {
+                message.setRetained(false);
+            }
+
+            client.publish(topic, message, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i ("hello", "publish succeed! ") ;
+                    Log.i("fuck", "topic "+topic+" mess:"+message);
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("hello", "publish failed!") ;
+                    Log.i("fuck", "publish failed!");
                 }
             });
         } catch (MqttException e) {
@@ -102,17 +118,66 @@ public class MQTTService implements MqttCallback {
         return mqttService;
     }
 
-    public void subscribe(String topic) {
+    public void subscribe(String topic, int qos) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (client.isConnected()){
+                        client.subscribe(topic, qos, null, new IMqttActionListener() {
+                            @Override
+                            public void onSuccess(IMqttToken asyncActionToken) {
+                                Log.i("fuck", "subscribed succeed topic: "+topic);
+                            }
+
+                            @Override
+                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                Log.i("fuck", "subscribed failed");
+                            }
+                        });
+                    } else {
+                        Log.i("fuck", "can't subscribe client is not connect");
+                    }
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 2000 );
+
+    }
+
+    public void disconnect() {
         try {
-            client.subscribe(topic, 2, null, new IMqttActionListener() {
+            IMqttToken disToken = client.disconnect();
+            disToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("hello", "subscribed succeed");
+                    Log.i("fuck", "disconnect success");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                    // something went wrong, but probably we are disconnected anyway
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unSubscribe(final String topic) {
+        try {
+            IMqttToken subToken = client.unsubscribe(topic);
+            subToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("fuck", "unsubscribe success topic " + topic);
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("hello", "subscribed failed");
+
                 }
             });
 
@@ -156,5 +221,6 @@ public class MQTTService implements MqttCallback {
 
     public interface listener {
         void onReceive(String topic, String mess);
+        void onConnected(boolean state);
     }
 }

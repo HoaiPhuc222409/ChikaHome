@@ -4,7 +4,7 @@ package com.example.chikaapp.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.chikaapp.R;
 import com.example.chikaapp.SharedPreferencesUtils;
 import com.example.chikaapp.activity.LoginActivity;
-import com.example.chikaapp.api.APIAccount;
+import com.example.chikaapp.api.UserUtils;
 import com.example.chikaapp.api.ApiRetrofit;
 import com.example.chikaapp.model.User;
 import com.squareup.picasso.Picasso;
-
-import java.sql.Time;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,9 +36,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class UserFragment extends Fragment implements View.OnClickListener{
 
-    Button btnSignOut, btnAddHomeUser;
+    Button btnSignOut, btnAddHomeUser, btnSupport, btnEditInfo;
     TextView tvName, tvPhone, tvEmail;
     ImageView avatar;
+    CommunicationInterface listener;
 
 
     public UserFragment() {
@@ -55,7 +56,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         loadUser(getContext());
 
-//        userInfo(getContext());
+
 
         return view;
     }
@@ -64,6 +65,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
     public void initialize(View view){
         btnSignOut = view.findViewById(R.id.btnLogOut);
+        btnEditInfo = view.findViewById(R.id.btn_edit_user_info);
+        btnSupport = view.findViewById(R.id.btn_support);
         btnAddHomeUser=view.findViewById(R.id.btn_add_HomeUser);
         tvPhone =view.findViewById(R.id.tv_phone);
         tvName=view.findViewById(R.id.tv_username);
@@ -72,6 +75,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         btnSignOut.setOnClickListener(this);
         btnAddHomeUser.setOnClickListener(this);
+        btnEditInfo.setOnClickListener(this);
+        btnSupport.setOnClickListener(this);
     }
 
 
@@ -83,19 +88,11 @@ public class UserFragment extends Fragment implements View.OnClickListener{
             tvEmail.setText(user.getEmail());
 
             Picasso.get().load(user.getAvatar()).into(avatar);
-//            final Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-                    // Do something after 5s = 5000ms
-                    if (user.getRole().equals("HOME_MASTER")||user.getRole().equals("ADMIN")){
+             if (user.getRole().equals("HOME_MASTER")||user.getRole().equals("ADMIN")){
                         btnAddHomeUser.setVisibility(View.VISIBLE);
-                    } else{
+             } else{
                         btnAddHomeUser.setVisibility(View.GONE);
-                    }
-//                }
-//            }, 5000);
-
+             }
         }
 
 
@@ -107,7 +104,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                 .baseUrl(ApiRetrofit.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        APIAccount iAccount=retrofit.create(APIAccount.class);
+        UserUtils iAccount=retrofit.create(UserUtils.class);
         Call<User> userCall=iAccount.getUser(token);
         userCall.enqueue(new Callback<User>() {
             @Override
@@ -120,18 +117,11 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                     tvEmail.setText(user.getEmail());
 
                     Picasso.get().load(user.getAvatar()).into(avatar);
-//            final Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-                    // Do something after 5s = 5000ms
                     if (user.getRole().equals("HOME_MASTER")||user.getRole().equals("ADMIN")){
                         btnAddHomeUser.setVisibility(View.VISIBLE);
                     } else{
                         btnAddHomeUser.setVisibility(View.GONE);
                     }
-//                }
-//            }, 5000);
                 }
             }
             @Override
@@ -152,7 +142,24 @@ public class UserFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.btn_add_HomeUser:{
                 Toast.makeText(getContext(), "Add_Home_User", Toast.LENGTH_SHORT).show();
+                break;
             }
+
+            case R.id.btn_edit_user_info:
+                showEditInfoFragment();
+                break;
+//
+//            case R.id.btn_support:
         }
     }
+
+    public void showEditInfoFragment(){
+        FragmentManager manager=getFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.addToBackStack(null);
+        EditUserInfoFragment editUserInfoFragment = new EditUserInfoFragment();
+        transaction.replace(R.id.frame_container,editUserInfoFragment);
+        transaction.commit();
+    }
+
 }

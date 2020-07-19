@@ -60,7 +60,8 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_button_not_used, container, false);
+        initialize(view);
         //MQTTConnection
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(UserName);
@@ -76,8 +77,7 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
         topic = bundle.getString("topic");
         type = bundle.getString("type");
 
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_button_not_used, container, false);
-        initialize(view);
+
         if (max == 2) {
             button3.setVisibility(View.GONE);
         }
@@ -139,6 +139,12 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disconnect();
+    }
+
     public void initialize(View view) {
         //MQTT
         clientId = MqttClient.generateClientId();
@@ -195,10 +201,6 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
 
     public void publish(String topic, String payload, String type) {
         try {
-            if (mqttAndroidClient.isConnected() == false) {
-                mqttAndroidClient.connect();
-            }
-
             MqttMessage message = new MqttMessage();
             message.setPayload(payload.getBytes());
             message.setQos(2);
@@ -221,6 +223,25 @@ public class ButtonNotUsedFragment extends Fragment implements View.OnLongClickL
             });
         } catch (MqttException e) {
             Log.e("hello", e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void disconnect() {
+        try {
+            IMqttToken disToken = mqttAndroidClient.disconnect();
+            disToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("fuck", "disconnect success");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                }
+            });
+        } catch (MqttException e) {
             e.printStackTrace();
         }
     }
