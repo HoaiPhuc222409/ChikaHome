@@ -8,15 +8,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +26,6 @@ import com.example.chikaapp.api.ApiRetrofit;
 import com.example.chikaapp.api.DeviceUtils;
 import com.example.chikaapp.model.DeleteResponse;
 import com.example.chikaapp.model.Devices;
-import com.example.chikaapp.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -136,13 +132,13 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
                                     } else if (type.equals("SR2") || type.equals("SR3")) {
                                         String RFCommunication;
                                         if (state) {
-                                            RFCommunication ="{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + false +"}";
+                                            RFCommunication = "{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + false + "}";
                                             publish(topic, RFCommunication, type);
                                         } else {
-                                            RFCommunication ="{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + true +"}";
+                                            RFCommunication = "{\"type\": " + "\"SR\"" + ",\"button\": " + swBtn + ",\"state\": " + true + "}";
                                             publish(topic, RFCommunication, type);
                                         }
-                                    } else if (type.equals("create")){
+                                    } else if (type.equals("create")) {
                                         listener.DeviceToProducts(idRoom);
                                     }
 
@@ -182,7 +178,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initialize(View view) {
-        tvRoomName = view.findViewById(R.id.tv_room_name);
+        tvRoomName = view.findViewById(R.id.tv_script_name);
         tv_humidity = view.findViewById(R.id.humidity);
         tv_temperature = view.findViewById(R.id.temperature);
         imgRefresh = view.findViewById(R.id.img_refresh);
@@ -258,7 +254,7 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
                 if (devices != null) {
                     loadingDialog.dismiss();
                     devicesArrayList = devices;
-                    devices.add(new Devices(null, null, "create","Create new device",false,null,"create",null, 1));
+                    devices.add(new Devices(null, null, "create", "Tạo thiết bị mới", false, null, "create", null, 1));
                     devicesAdapter.updateList(devices);
                     devicesAdapter.notifyDataSetChanged();
                 } else {
@@ -291,7 +287,6 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
             if (mqttAndroidClient.isConnected() == false) {
                 mqttAndroidClient.connect();
             }
-
             MqttMessage message = new MqttMessage();
             message.setPayload(payload.getBytes());
             message.setQos(2);
@@ -300,20 +295,20 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
             } else {
                 message.setRetained(false);
             }
+            mqttAndroidClient.publish(topic, message
+                    , null, new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                           //publish success
+                        }
 
-            mqttAndroidClient.publish(topic, message, null, new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("debug", "topic "+topic+" mess:"+message);
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.i("debug", "publish failed!");
-                }
-            });
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken
+                                , Throwable exception) {
+                            //publish fail
+                        }
+                    });
         } catch (MqttException e) {
-            Log.e("hello", e.toString());
             e.printStackTrace();
         }
     }

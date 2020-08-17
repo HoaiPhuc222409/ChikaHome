@@ -143,7 +143,8 @@ public class AddRoomFragment extends Fragment implements View.OnClickListener{
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             roomUtils = retrofit.create(RoomUtils.class);
-            Call<Room> call = roomUtils.createRoom(SharedPreferencesUtils.loadToken(getContext()),
+            Call<Room> call = roomUtils
+                    .createRoom(SharedPreferencesUtils.loadToken(getContext()),
                     new CreateRoomRequest(logo.getName_image(),room_name));
             call.enqueue(new Callback<Room>() {
                 @Override
@@ -151,22 +152,36 @@ public class AddRoomFragment extends Fragment implements View.OnClickListener{
                     Room room = response.body();
                     if (room != null) {
                         dialog.dismiss();
-                        CustomToast.makeText(getContext(),"Create Success",CustomToast.LENGTH_LONG,CustomToast.SUCCESS,false).show();
-                        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                        CustomToast.makeText(getContext()
+                                ,"Create Success"
+                                ,CustomToast.LENGTH_LONG
+                                ,CustomToast.SUCCESS
+                                ,false).show();
+                        FragmentManager fragmentManager=getActivity()
+                                .getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction=fragmentManager
+                                .beginTransaction();
 
                         fragmentTransaction.replace(R.id.frame_container,new RoomFragment());
                         fragmentTransaction.commit();
 
                     } else {
-                        CustomToast.makeText(getContext(),"Create Fail",CustomToast.LENGTH_LONG,CustomToast.WARNING,false).show();
+                        CustomToast.makeText(getContext()
+                                ,"Create Fail"
+                                ,CustomToast.LENGTH_LONG
+                                ,CustomToast.WARNING
+                                ,false).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Room> call, Throwable t) {
                     dialog.dismiss();
-                    CustomToast.makeText(getContext(),""+t.toString(),CustomToast.LENGTH_LONG,CustomToast.WARNING,false).show();
+                    CustomToast.makeText(getContext()
+                            ,""+t.toString()
+                            ,CustomToast.LENGTH_LONG
+                            ,CustomToast.WARNING
+                            ,false).show();
                 }
 
 

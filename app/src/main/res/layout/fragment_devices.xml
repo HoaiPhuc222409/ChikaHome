@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tv_room_name"
+            android:id="@+id/tv_script_name"
             android:text="@string/type_room_name"
             android:textSize="20sp"
             android:textColor="#000000"
@@ -58,6 +58,7 @@
                     android:id="@+id/humidity"
                     android:textColor="@color/green"
                     android:textSize="30sp"
+                    android:text="58"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -89,6 +90,7 @@
                 <TextView
                     android:id="@+id/temperature"
                     android:textColor="@color/red"
+                    android:text="27"
                     android:textSize="30sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

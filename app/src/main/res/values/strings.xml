@@ -100,4 +100,14 @@
     <string name="delete_scripts">Delete Scripts</string>
     <string name="back">Back</string>
     <string name="status_device">Device status has been set:</string>
+    <string name="name_script">Script name:</string>
+    <string name="input_script_name">Input name of Scripts</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="next">Next</string>
 </resources>

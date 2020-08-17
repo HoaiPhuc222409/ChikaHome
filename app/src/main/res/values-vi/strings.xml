@@ -90,4 +90,14 @@
     <string name="delete_scripts">Xóa kịch bản</string>
     <string name="back">Trở về</string>
     <string name="status_device">Trạng thái thiết bị đã thiết lập:</string>
+    <string name="name_script">Tên kịch bản:</string>
+    <string name="input_script_name">Nhập tên kịch bản</string>
+    <string name="Friday">Thứ 6</string>
+    <string name="Saturday">Thứ 7</string>
+    <string name="thursday">Thứ 5</string>
+    <string name="sunday">Chủ nhật</string>
+    <string name="monday">Thứ 2</string>
+    <string name="tuesday">Thứ 3</string>
+    <string name="wednesday">Thứ 4</string>
+    <string name="next">Tiếp theo</string>
 </resources>

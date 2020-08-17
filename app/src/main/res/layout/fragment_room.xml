@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/btn_add_room"
-            android:text="Create new room"
+            android:text="Tạo phòng"
             android:layout_alignParentEnd="true"
             android:textAlignment="gravity"
             android:layout_marginTop="10dp"

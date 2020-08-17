@@ -24,7 +24,7 @@
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="50dp"
-        android:id="@+id/cv_img_ic_room"
+        android:id="@+id/cv_img_ic_script"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:id="@+id/ln1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cv_img_ic_room"
+        android:layout_below="@+id/cv_img_ic_script"
         android:layout_marginStart="18dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="18dp"
@@ -47,7 +47,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_room_name"
+            android:id="@+id/tv_script_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"

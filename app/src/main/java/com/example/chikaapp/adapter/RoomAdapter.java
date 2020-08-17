@@ -1,13 +1,6 @@
 package com.example.chikaapp.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +14,8 @@ import com.example.chikaapp.model.Room;
 
 import java.util.ArrayList;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
+public class RoomAdapter
+        extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     ArrayList<Room> roomArrayList;
     Context context;
@@ -39,16 +33,18 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_room, parent, false);
-
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent
+            , int viewType) {
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_room, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder
+            , int position) {
         Room room = roomArrayList.get(position);
         roomId= getRoomIcon(room.getLogo());
         roomImg=getBackgroundImage(room.getLogo());
@@ -138,7 +134,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img_room = itemView.findViewById(R.id.img_room);
-            tv_room_name = itemView.findViewById(R.id.tv_room_name);
+            tv_room_name = itemView.findViewById(R.id.tv_script_name);
         }
     }
 

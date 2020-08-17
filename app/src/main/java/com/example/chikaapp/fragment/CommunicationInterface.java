@@ -1,5 +1,6 @@
 package com.example.chikaapp.fragment;
 
+import com.example.chikaapp.model.Image;
 import com.example.chikaapp.model.Scripts;
 
 import java.util.ArrayList;
@@ -12,4 +13,6 @@ public interface CommunicationInterface {
     void ProductsToAddIRDevice(String idRoom, String topic, String type);
     void UserToEditUserInfo();
     void ScriptToDetailScripts(Scripts scripts);
+    void ScriptToAddScript(Image img);
+    void DialogImageToAddScript(Image image);
 }

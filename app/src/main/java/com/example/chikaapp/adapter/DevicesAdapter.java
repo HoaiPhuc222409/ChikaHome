@@ -5,22 +5,18 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chikaapp.R;
-import com.example.chikaapp.dialog.CustomDialogClass;
 import com.example.chikaapp.model.Devices;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -35,7 +31,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.json.JSONObject;
 
-import java.nio.channels.Channel;
 import java.util.ArrayList;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHolder>  {

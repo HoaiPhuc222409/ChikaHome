@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imgLux"
-                    android:src="@drawable/ic_temperature"
+                    android:src="@drawable/ic_brightness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView

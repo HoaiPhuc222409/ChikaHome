@@ -48,30 +48,27 @@ public class MQTTService implements MqttCallback {
 
     }
 
-    public void connect(){
-
+    public void connect() {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(UserName);
         options.setPassword(Password.toCharArray());
         options.setCleanSession(true);
         options.setKeepAliveInterval(1000);
-
         try {
-
-            client = new MqttAndroidClient(context, URL, clientId, new MemoryPersistence());
+            client = new MqttAndroidClient(context, URL
+                    , clientId, new MemoryPersistence());
             client.setCallback(this);
             IMqttToken token = client.connect(options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     listener.onConnected(true);
-                    Log.i("fuck", "connected");
                 }
 
                 @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                public void onFailure(IMqttToken asyncActionToken
+                        , Throwable exception) {
                     listener.onConnected(false);
-                    Log.i("fuck", "not connected");
                 }
             });
         } catch (MqttException e) {
@@ -98,7 +95,7 @@ public class MQTTService implements MqttCallback {
             client.publish(topic, message, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("fuck", "topic "+topic+" mess:"+message);
+                    Log.i("fuck", "topic " + topic + " mess:" + message);
                 }
 
                 @Override
@@ -119,32 +116,30 @@ public class MQTTService implements MqttCallback {
     }
 
     public void subscribe(String topic, int qos) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (client.isConnected()){
-                        client.subscribe(topic, qos, null, new IMqttActionListener() {
-                            @Override
-                            public void onSuccess(IMqttToken asyncActionToken) {
-                                Log.i("fuck", "subscribed succeed topic: "+topic);
-                            }
 
-                            @Override
-                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                Log.i("fuck", "subscribed failed");
-                            }
-                        });
-                    } else {
-                        Log.i("fuck", "can't subscribe client is not connect");
+        try {
+            if (client.isConnected()) {
+                client.subscribe(topic, qos, null
+                        , new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+                        //subscribe topic success
                     }
-                } catch (MqttException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 2000 );
 
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken
+                            , Throwable exception) {
+                        //subscribe topic fail
+                    }
+                });
+            } else {
+                reconnect();
+            }
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void disconnect() {
         try {
@@ -152,7 +147,7 @@ public class MQTTService implements MqttCallback {
             disToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("fuck", "disconnect success");
+                    // we are now successfully disconnected
                 }
 
                 @Override
@@ -172,12 +167,13 @@ public class MQTTService implements MqttCallback {
             subToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("fuck", "unsubscribe success topic " + topic);
+                   //unsubscribe success
                 }
 
                 @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
+                public void onFailure(IMqttToken asyncActionToken
+                        , Throwable exception) {
+                    //unsubscribe fail
                 }
             });
 
@@ -221,6 +217,7 @@ public class MQTTService implements MqttCallback {
 
     public interface listener {
         void onReceive(String topic, String mess);
+
         void onConnected(boolean state);
     }
 }

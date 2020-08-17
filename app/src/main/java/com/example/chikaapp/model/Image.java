@@ -1,6 +1,8 @@
 package com.example.chikaapp.model;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable {
 
     public String name_image;
     public int id;

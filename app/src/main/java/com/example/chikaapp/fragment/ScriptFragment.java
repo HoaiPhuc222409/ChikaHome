@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,7 +74,7 @@ public class ScriptFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         if (scriptsArrayList.get(position).getId().equals("create")){
-                            Toast.makeText(getContext(), "Tao Scripts", Toast.LENGTH_SHORT).show();
+                            listener.ScriptToAddScript(null);
                         } else {
                             listener.ScriptToDetailScripts(scriptsArrayList.get(position));
                         }
@@ -113,8 +114,7 @@ public class ScriptFragment extends Fragment {
                 ArrayList<Scripts> scripts = new ArrayList<>();
                 scripts = response.body();
                 if (scripts != null) {
-
-                    scripts.add(new Scripts("create", "create", "New Script", null,null,null,null));
+                    scripts.add(new Scripts("create", "create", "Kịch bản mới", null,null,null,null));
                     scriptsAdapter.updateList(scripts);
                     scriptsArrayList = scripts;
                     scriptsAdapter.notifyDataSetChanged();
@@ -129,6 +129,14 @@ public class ScriptFragment extends Fragment {
                 CustomToast.makeText(getContext(), "Failure", CustomToast.LENGTH_LONG, CustomToast.WARNING, false).show();
             }
         });
+    }
+
+    public void showAddScriptFragment(){
+        AddScriptFragment fragment = new AddScriptFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

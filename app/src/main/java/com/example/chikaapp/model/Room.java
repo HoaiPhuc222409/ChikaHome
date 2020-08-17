@@ -14,8 +14,7 @@ public class Room {
         this.createAt = createAt;
     }
 
-    public Room() {
-    }
+    public Room() { }
 
     public String getCreateAt() {
         return createAt;

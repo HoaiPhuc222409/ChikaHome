@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.chikaapp.R;
 import com.example.chikaapp.fragment.AddDeviceFragment;
+import com.example.chikaapp.fragment.AddScriptFragment;
 import com.example.chikaapp.fragment.ButtonNotUsedFragment;
 import com.example.chikaapp.fragment.CameraFragment;
 import com.example.chikaapp.fragment.CommunicationInterface;
@@ -26,6 +28,7 @@ import com.example.chikaapp.fragment.ProductsFragment;
 import com.example.chikaapp.fragment.RoomFragment;
 import com.example.chikaapp.fragment.ScriptFragment;
 import com.example.chikaapp.fragment.UserFragment;
+import com.example.chikaapp.model.Image;
 import com.example.chikaapp.model.Scripts;
 import com.example.chikaapp.request.EditInfoUserRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -203,6 +206,31 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         bundle.putSerializable("scripts", scripts);
         detailScriptsFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container,detailScriptsFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void ScriptToAddScript(Image img) {
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("image", img);
+        AddScriptFragment addScriptFragment = new AddScriptFragment();
+        addScriptFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container,addScriptFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void DialogImageToAddScript(Image image) {
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("image", image);
+        Toast.makeText(this, "id"+image.getName_image(), Toast.LENGTH_SHORT).show();
+        AddScriptFragment addScriptFragment = new AddScriptFragment();
+        addScriptFragment.setArguments(bundle);
+        transaction.replace(R.id.frame_container,addScriptFragment);
         transaction.commit();
     }
 

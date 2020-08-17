@@ -126,15 +126,18 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initialize(View view) {
-        rclRoomList = view.findViewById(R.id.rclRoom);
+
         btnAdd = view.findViewById(R.id.btn_add_room);
         tvNoRoom = view.findViewById(R.id.tvNoRoom);
 
+        //Adapter
         roomArrayList=new ArrayList<>();
         roomAdapter=new RoomAdapter(new ArrayList<Room>(),getContext());
-
+        //RecyclerView
+        rclRoomList = view.findViewById(R.id.rclRoom);
         rclRoomList.setAdapter(roomAdapter);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(),1);
+        RecyclerView.LayoutManager mLayoutManager
+                = new GridLayoutManager(getContext(),1);
         rclRoomList.setLayoutManager(mLayoutManager);
 
         btnAdd.setOnClickListener(this);

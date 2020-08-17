@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtUsername=findViewById(R.id.edtUserLogin);
         edtPassword=findViewById(R.id.edtPassword);
         tvForgetPassword=findViewById(R.id.tvForgetPassword);
-//        changeLanguage("vi");
+
         btnLogin.setOnClickListener(this);
 //        btnTest1.setOnClickListener(this);
 //        btnTest2.setOnClickListener(this);
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onFailure(Call<Token> call, Throwable t) {
                 dialog.dismiss();
                 Log.i("error3",t.toString());
-                CustomToast.makeText(LoginActivity.this,"Check your connection",CustomToast.LENGTH_LONG,CustomToast.SUCCESS,false).show();
+                CustomToast.makeText(LoginActivity.this,"Check your connection",CustomToast.LENGTH_LONG,CustomToast.ERROR,false).show();
             }
         });
     }

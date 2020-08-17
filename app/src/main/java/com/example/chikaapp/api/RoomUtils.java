@@ -24,7 +24,8 @@ public interface RoomUtils {
     )
     //create room
     @POST("/room")
-    Call<Room> createRoom(@Header ("Authorization") String token,@Body CreateRoomRequest createRoomRequest);
+    Call<Room> createRoom(@Header ("Authorization") String token
+            ,@Body CreateRoomRequest createRoomRequest);
 
     //get all room
     @GET("/room")
@@ -32,6 +33,7 @@ public interface RoomUtils {
 
     //delete room by id
     @DELETE("/room/{id}")
-    Call<DeleteResponse> deleteRoom(@Header("Authorization") String token, @Path("id") String id);
+    Call<DeleteResponse> deleteRoom(@Header("Authorization") String token
+            , @Path("id") String id);
 
 }

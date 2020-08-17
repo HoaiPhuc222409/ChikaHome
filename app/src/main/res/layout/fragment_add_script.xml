@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F6FA"
+    tools:context=".fragment.AddRoomFragment">
+
+
+
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="50dp"
+        android:id="@+id/cv_img_ic_script"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_scripts"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/ln1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cv_img_ic_script"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_stroke"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_script_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/name_script"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edt_room_name"
+            android:layout_width="249dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:hint="@string/input_script_name"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:textColorHint="#DD7171"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:id="@+id/ln_day_in_week"
+        android:layout_below="@+id/ln1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_mon"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_tue"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_wed"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_thu"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_fri"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/Friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_sat"
+            android:layout_marginEnd="2dp"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/Saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_sun"
+            android:padding="7dp"
+            android:background="@drawable/bg_stroke"
+            android:text="@string/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_centerHorizontal="true"
+        android:text="day in week"
+        android:layout_below="@+id/ln_day_in_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/img_timer"
+        android:src="@drawable/ic_oclock_24dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tv_day"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:text="00:00"
+        android:layout_below="@+id/img_timer"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_done"
+        android:text="@string/next"
+        android:layout_below="@+id/tv_time"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:background="@drawable/bg_stroke"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
