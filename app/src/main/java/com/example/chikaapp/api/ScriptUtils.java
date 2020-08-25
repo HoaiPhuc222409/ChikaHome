@@ -22,15 +22,12 @@ public interface ScriptUtils {
                     "Content-Type:application/json",
             }
     )
-    //create room
-    @POST("/script")
-    Call<Room> createRoom(@Header("Authorization") String token, @Body CreateRoomRequest createRoomRequest);
 
     //get all script
     @GET("/script")
     Call<ArrayList<Scripts>> getScript(@Header("Authorization") String token);
 
-    //delete room by id
+    //delete script by id
     @DELETE("/script/{id}")
     Call<DeleteResponse> deleteScript(@Header("Authorization") String token, @Path("id") String id);
 }

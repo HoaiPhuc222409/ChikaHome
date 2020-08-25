@@ -47,7 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RoomFragment extends Fragment implements View.OnClickListener {
 
     TextView btnAdd, tvNoRoom;
-    RecyclerView rclRoomList;
+    RecyclerView rclRoomList, rclDeviceList;
 
     RoomUtils roomUtils;
     RoomAdapter roomAdapter;
@@ -108,7 +108,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                             }
                             return false;
                         });
-                        popupMenu.show();
                     }
                 })
         );

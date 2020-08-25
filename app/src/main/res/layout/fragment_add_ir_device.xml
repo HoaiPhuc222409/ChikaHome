@@ -17,26 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:id="@+id/ln_Device_Name"
-        android:layout_below="@+id/tvTitle"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginStart="20dp"
-            android:padding="5dp"
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:text="@string/device_name"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/edt_device_name"
-            android:hint="@string/exp_device"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <TextView
         android:padding="10dp"
@@ -54,12 +34,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
+
+        <RelativeLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="60dp"
+                android:id="@+id/cardView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -70,21 +53,32 @@
                     android:layout_height="120dp"/>
             </androidx.cardview.widget.CardView>
 
+            <ImageView
+                android:id="@+id/img_tick"
+                android:src="@drawable/img_safe1"
+                android:layout_width="20dp"
+                android:visibility="gone"
+                android:layout_below="@+id/cardView1"
+                android:layout_height="20dp"/>
+
             <TextView
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/tv_air_cond"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/cardView1"
                 android:text="@string/air_conditioner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginStart="20dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="60dp"
+                android:id="@+id/cardView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -95,14 +89,42 @@
                     android:layout_height="120dp"/>
             </androidx.cardview.widget.CardView>
 
+            <ImageView
+                android:id="@+id/img_tick1"
+                android:src="@drawable/img_safe1"
+                android:layout_width="20dp"
+                android:layout_marginStart="20dp"
+                android:visibility="gone"
+                android:layout_below="@+id/cardView2"
+                android:layout_height="20dp"/>
+
             <TextView
-                android:layout_gravity="center"
                 android:id="@+id/tv_television"
                 android:text="@string/television"
+                android:layout_below="@+id/cardView2"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:padding="10dp"
+        android:layout_below="@+id/ln_Device_Name"
+        android:layout_marginStart="15dp"
+        android:id="@+id/nameDevice"
+        android:text="@string/device_name"
+        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:background="@drawable/bg_stroke"
+        android:id="@+id/edt_device_name"
+        android:padding="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:hint="@string/exp_device"
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/btn_Done"
         android:text="@string/done"

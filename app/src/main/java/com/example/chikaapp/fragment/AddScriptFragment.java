@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddScriptFragment extends Fragment {
+public class AddScriptFragment extends Fragment implements View.OnClickListener {
 
     ImageView imgScript, imgTimer;
     List<Image> imageList;
@@ -59,6 +60,10 @@ public class AddScriptFragment extends Fragment {
             userInfoDialog.show(fm, "image_dialog");
         });
 
+        tv_done.setOnClickListener(v->{
+            showAllScriptDeviceFragment();
+        });
+
         setDays(tv_mon);
         setDays(tv_tue);
         setDays(tv_wed);
@@ -71,14 +76,6 @@ public class AddScriptFragment extends Fragment {
             showTimePicker();
         });
 
-        tv_done.setOnClickListener(v->{
-            for (int i=1; i<=7; i++){
-
-            }
-        });
-
-
-
         return view;
     }
 
@@ -87,7 +84,7 @@ public class AddScriptFragment extends Fragment {
         imgTimer = view.findViewById(R.id.img_timer);
         tv_time = view.findViewById(R.id.tv_time);
         tv_day = view.findViewById(R.id.tv_day);
-        tv_done = view.findViewById(R.id.tv_done);
+        tv_done = view.findViewById(R.id.tv_next);
 
         tv_mon = view.findViewById(R.id.tv_mon);
         tv_tue = view.findViewById(R.id.tv_tue);
@@ -154,4 +151,16 @@ public class AddScriptFragment extends Fragment {
         return list;
     }
 
+    public void showAllScriptDeviceFragment(){
+        AddDevicesToScriptFragment fragment = new AddDevicesToScriptFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

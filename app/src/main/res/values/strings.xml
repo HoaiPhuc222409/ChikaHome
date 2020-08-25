@@ -6,7 +6,7 @@
     <string name="your_products">Your products</string>
     <string name="done">Done</string>
     <string name="device_name">Device"'s name:</string>
-    <string name="exp_device">Light, Fan, v.v</string>
+    <string name="exp_device">Light, Fan, Television, Air Conditioner, v.v</string>
     <string name="usable_button">Usable button:</string>
     <string name="button_1">Button 1</string>
     <string name="button_2">Button 2</string>
@@ -88,6 +88,7 @@
     <string name="window">Window</string>
     <string name="camera">Camera</string>
     <string name="create_device">Create Device</string>
+    <string name="create_script">Create Script</string>
     <string name="type_device">Type of Device</string>
 
 

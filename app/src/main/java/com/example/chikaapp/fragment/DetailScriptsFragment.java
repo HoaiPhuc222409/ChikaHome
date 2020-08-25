@@ -190,6 +190,7 @@ public class DetailScriptsFragment extends Fragment implements View.OnClickListe
 
                         .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                             deleteScript(SharedPreferencesUtils.loadToken(getContext()),scriptId);
+                            Toast.makeText(getContext(), ""+scriptId, Toast.LENGTH_SHORT).show();
                         })
                         .setNegativeButton(android.R.string.no, null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -212,12 +213,17 @@ public class DetailScriptsFragment extends Fragment implements View.OnClickListe
             public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
                 DeleteResponse deleteResponse;
                 deleteResponse = response.body();
-                if (deleteResponse.isSuccess()){
-                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.SUCCESS,false).show();
-                    showScriptFragment();
+                if (deleteResponse!=null){
+                    if (deleteResponse.isSuccess()){
+                        CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.SUCCESS,false).show();
+                        showScriptFragment();
+                    } else {
+                        CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.ERROR,false).show();
+                    }
                 } else {
-                    CustomToast.makeText(getContext(), deleteResponse.getMessage(), CustomToast.LENGTH_SHORT,CustomToast.ERROR,false).show();
+                    CustomToast.makeText(getContext(),"Please try later", CustomToast.LENGTH_LONG, CustomToast.ERROR,false).show();
                 }
+
             }
 
             @Override

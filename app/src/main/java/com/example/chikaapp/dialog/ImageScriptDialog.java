@@ -21,7 +21,6 @@ import com.example.chikaapp.fragment.CommunicationInterface;
 import com.example.chikaapp.model.Image;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImageScriptDialog extends DialogFragment {
