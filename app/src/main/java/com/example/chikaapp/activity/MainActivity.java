@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
                     fragment = new ScriptFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.navigation_camera:
-                    fragment = new CameraFragment();
-                    loadFragment(fragment);
-                    return true;
+//                case R.id.navigation_camera:
+//                    fragment = new CameraFragment();
+//                    loadFragment(fragment);
+//                    return true;
                 case R.id.navigation_account:
                     fragment = new UserFragment();
                     loadFragment(fragment);
@@ -231,16 +231,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         AddScriptFragment addScriptFragment = new AddScriptFragment();
         addScriptFragment.setArguments(bundle);
         transaction.replace(R.id.frame_container,addScriptFragment);
-        transaction.commit();
-    }
-
-    @Override
-    public void UserToEditUserInfo() {
-        FragmentManager manager=getSupportFragmentManager();
-        FragmentTransaction transaction=manager.beginTransaction();
-        transaction.addToBackStack(null);
-        EditUserInfoFragment editUserInfoFragment = new EditUserInfoFragment();
-        transaction.replace(R.id.frame_container,editUserInfoFragment);
         transaction.commit();
     }
 

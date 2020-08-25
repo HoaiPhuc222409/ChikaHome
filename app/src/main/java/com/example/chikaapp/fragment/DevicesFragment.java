@@ -39,6 +39,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressPie;
@@ -182,6 +183,14 @@ public class DevicesFragment extends Fragment implements View.OnClickListener {
         tv_humidity = view.findViewById(R.id.humidity);
         tv_temperature = view.findViewById(R.id.temperature);
         imgRefresh = view.findViewById(R.id.img_refresh);
+
+
+        Random rc=new Random();
+        int c=rc.nextInt(80-50+1)+50;
+        tv_humidity.setText(String.valueOf(c));
+        Random rd=new Random();
+        int d=rd.nextInt(30-25+1)+25;
+        tv_temperature.setText(String.valueOf(d));
 
         //adapter
         devicesArrayList = new ArrayList<>();

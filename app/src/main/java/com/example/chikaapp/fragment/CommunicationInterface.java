@@ -11,7 +11,6 @@ public interface CommunicationInterface {
     void ProductsToButtonNotUsed(ArrayList arrayList, int maxButton, String idRoom, String topic, String type);
     void ButtonNotUsedToAddDevice(int button, String idRoom, String topic, String type);
     void ProductsToAddIRDevice(String idRoom, String topic, String type);
-    void UserToEditUserInfo();
     void ScriptToDetailScripts(Scripts scripts);
     void ScriptToAddScript(Image img);
     void DialogImageToAddScript(Image image);

@@ -24,14 +24,17 @@ public interface DeviceUtils {
     )
 
     @GET("/device/room_id/{id}")
-    Call<ArrayList<Devices>> getDevices(@Header ("Authorization") String token, @Path("id") String id);
+    Call<ArrayList<Devices>> getDevices(@Header ("Authorization") String token
+            , @Path("id") String id);
 
     @GET("/device/script")
     Call<ArrayList<ScriptDevices>> getAllDevice(@Header("Authorization") String token);
 
     @POST("/device")
-    Call<Devices> createDevice(@Header ("Authorization") String token, @Body CreateDeviceRequest request);
+    Call<Devices> createDevice(@Header ("Authorization") String token
+            , @Body CreateDeviceRequest request);
 
     @DELETE("/device/{id}")
-    Call<DeleteResponse> deleteDevices(@Header ("Authorization") String token, @Path("id") String id);
+    Call<DeleteResponse> deleteDevices(@Header ("Authorization") String token
+            , @Path("id") String id);
 }

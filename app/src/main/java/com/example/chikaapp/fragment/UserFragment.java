@@ -86,13 +86,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
             tvPhone.setText(user.getPhone());
             tvName.setText(user.getName());
             tvEmail.setText(user.getEmail());
-
             Picasso.get().load(user.getAvatar()).into(avatar);
-             if (user.getRole().equals("HOME_MASTER")||user.getRole().equals("ADMIN")){
-                        btnAddHomeUser.setVisibility(View.VISIBLE);
-             } else{
-                        btnAddHomeUser.setVisibility(View.GONE);
-             }
         }
 
 

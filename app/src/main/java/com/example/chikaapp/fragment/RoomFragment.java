@@ -90,7 +90,6 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        Toast.makeText(getContext(), "Long Click", Toast.LENGTH_SHORT).show();
                         PopupMenu popupMenu = new PopupMenu(getContext(),rclRoomList.getChildAt(position));
                         popupMenu.getMenuInflater().inflate(R.menu.room_menu,popupMenu.getMenu());
                         popupMenu.setOnMenuItemClickListener(menuItem -> {
@@ -108,6 +107,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
                             }
                             return false;
                         });
+                        popupMenu.show();
                     }
                 })
         );
